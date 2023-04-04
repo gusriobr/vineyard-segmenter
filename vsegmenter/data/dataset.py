@@ -32,12 +32,15 @@ def create_sample(image_path, mask_path, image_size=None):
     # transform to binary
     mask[mask > 0.5] = 1
     mask[mask <= 0.5] = 0
+    # unet dataset needs a different channel for each category. Channel 0 = background 1 = foreground
+    unet_mask = np.zeros(mask.shape + (2,))
+    unet_mask[..., 0] = (mask == 0)  # background category
+    unet_mask[..., 1] = (mask == 1)
     # truncate datatype to reduce memory footage
-    mask = mask.astype(np.uint8)
-    mask = np.expand_dims(mask, axis=-1)
+    unet_mask = unet_mask.astype(np.uint8)
     image = image.astype(np.float16)
 
-    return {"image": image, "mask": mask}
+    return {"image": image, "mask": unet_mask}
 
 
 def create_dataset(train_images, test_images):

@@ -2,40 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95939c3f-9411-49a4-995a-901854fb064a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vineyard-segmenter.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/dataset.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/raster/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_mask.tiff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.cpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.dbf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.prj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.qpj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.shp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.shx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.cpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.dbf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.prj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.qmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.shp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.shx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/cfg.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/data/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/data/dataset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/data/extraction.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/data/load_dataset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/data/run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/model/train.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/model/unet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/model/unet_tf.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/utils/file.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/utils/lir.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/utils/log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/test_predictions.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vsegmenter/model/test_circles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/dataset.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/dataset.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/dataset/v1_128.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/resources/dataset/v1_128.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vsegmenter/data/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/data/dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vsegmenter/data/load_dataset.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vsegmenter/model/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/model/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vsegmenter/model/unet.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/model/unet_local.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vsegmenter/model/unet_tf.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/model/unet_tf.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,12 +81,13 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/notebooks" />
       <recent name="$PROJECT_DIR$/resources/dataset" />
       <recent name="$PROJECT_DIR$/resources/raster" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.unet_tf">
-    <configuration name="extraction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.test_circles">
+    <configuration name="dataset" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="vineyard-segmenter" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -123,7 +100,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vsegmenter/data/extraction.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vsegmenter/data/dataset.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -154,6 +131,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test_circles" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="vineyard-segmenter" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/vsegmenter/model" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vsegmenter/model/test_circles.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="vineyard-segmenter" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -168,28 +167,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vsegmenter/model/train.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="unet" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="vineyard-segmenter" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/vsegmenter/model" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vsegmenter/model/unet.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -222,11 +199,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.unet_tf" />
+        <item itemvalue="Python.test_circles" />
         <item itemvalue="Python.train" />
         <item itemvalue="Python.run" />
-        <item itemvalue="Python.extraction" />
-        <item itemvalue="Python.unet" />
+        <item itemvalue="Python.dataset" />
+        <item itemvalue="Python.unet_tf" />
       </list>
     </recent_temporary>
   </component>
@@ -244,6 +221,8 @@
       <workItem from="1680428725813" duration="1405000" />
       <workItem from="1680454088226" duration="7757000" />
       <workItem from="1680494052850" duration="4064000" />
+      <workItem from="1680532604514" duration="10885000" />
+      <workItem from="1680544593847" duration="3177000" />
     </task>
     <servers />
   </component>
@@ -261,13 +240,45 @@
       </map>
     </option>
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../../wpy/venvs/basictf/lib/python3.8/site-packages/keras/losses.py</url>
+          <line>140</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/vsegmenter/model/train.py</url>
+          <line>86</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../unet/src/unet/trainer.py</url>
+          <line>91</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../../wpy/venvs/basictf/lib/python3.8/site-packages/keras/metrics.py</url>
+          <line>4077</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/vsegmenter/model/test_circles.py</url>
+          <line>33</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/vineyard_segmenter$unet.coverage" NAME="unet Coverage Results" MODIFIED="1680458144257" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
-    <SUITE FILE_PATH="coverage/vineyard_segmenter$train.coverage" NAME="train Coverage Results" MODIFIED="1680496623226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
+    <SUITE FILE_PATH="coverage/vineyard_segmenter$train.coverage" NAME="train Coverage Results" MODIFIED="1680541148148" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$unet_tf.coverage" NAME="unet_tf Coverage Results" MODIFIED="1680497930384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
-    <SUITE FILE_PATH="coverage/vineyard_segmenter$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1680458053181" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
+    <SUITE FILE_PATH="coverage/vineyard_segmenter$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1680538170745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$test.coverage" NAME="test Coverage Results" MODIFIED="1680494511233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
+    <SUITE FILE_PATH="coverage/vineyard_segmenter$test_circles.coverage" NAME="test_circles Coverage Results" MODIFIED="1680545265935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$load_dataset.coverage" NAME="load_dataset Coverage Results" MODIFIED="1680424457941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
-    <SUITE FILE_PATH="coverage/vineyard_segmenter$run.coverage" NAME="run Coverage Results" MODIFIED="1680495544101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
+    <SUITE FILE_PATH="coverage/vineyard_segmenter$run.coverage" NAME="run Coverage Results" MODIFIED="1680539929889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
   </component>
 </project>
