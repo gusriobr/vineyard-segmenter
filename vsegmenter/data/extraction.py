@@ -122,7 +122,7 @@ def extract_images(src_file, mask_file, dst_folder, num_polygons=10, rect_size=(
         image.save(f"{dst_folder}/{i}_data.jpg")
         img_mask = Image.fromarray(mask_data)
         img_mask.save(f"{dst_folder}/{i}_mask.jpg")
-        i+=1
+        i += 1
 
 
 def check_categories(mask_data, threshold=0.3):
@@ -134,12 +134,11 @@ def check_categories(mask_data, threshold=0.3):
 
 
 if __name__ == '__main__':
-
     samples_file = '/media/gus/workspace/wml/vineyard-segmenter/resources/dataset.sqlite'
     raster_sample = '/media/gus/workspace/wml/vineyard-segmenter/resources/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_extraction.tiff'
     mask_file = cfg.resource("dataset/salida.tiff")
     burn_samples(samples_file, raster_sample, mask_file)
 
     output_folder = cfg.dataset("samples")
-    extract_images(raster_sample, mask_file, output_folder, num_polygons=500)
-
+    rect_size = (256, 256)
+    extract_images(raster_sample, mask_file, output_folder, rect_size=rect_size, num_polygons=500)
