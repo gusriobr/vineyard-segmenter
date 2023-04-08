@@ -10,6 +10,7 @@ import tensorflow as tf
 from keras_preprocessing.image import ImageDataGenerator
 from skimage import io
 from tensorflow.python.keras import backend as K
+from skimage.transform import resize
 
 from image.raster import georeference_image
 from vsegmenter import cfg
@@ -55,21 +56,7 @@ def standarize(mean, std):
     return f_inner
 
 
-#
-# def predict(model, images):
-#     prediction = unet_model.predict(validation_images)
-#     if std_f is not None:
-#         x = std_f(x)
-#         return model.predict(x)
-#     else:
-#         predict_gen = datagen.flow(x, y=None, shuffle=False)
-#         return model.predict_generator(predict_gen)
-
-
-def apply_model_slide(image_path, model, window_size=(48, 48), step_size=48, batch_size=64, threshold=0.8):
-    # load the input image
-    image = read_img(image_path)
-
+def apply_model_slide(image, model, window_size=(48, 48), step_size=48, batch_size=64, scale_factor=1):
     # grab the dimensions of the input image and crop the image such
     # that it tiles nicely when we generate the training data +
     # labels
@@ -78,28 +65,52 @@ def apply_model_slide(image_path, model, window_size=(48, 48), step_size=48, bat
     output_img = np.zeros((h, w, 1), dtype=np.uint8)
 
     for images, positions in batched_sliding_window(image, window_size, step_size, batch_size=batch_size):
-        # apply model
-        img_rescaled = np.empty((len(images), 128, 128, 3))
-        for i in range(len(images)):
-            # Redimensiona la imagen utilizando cv2.resize()
-            img_rescaled[i] = cv2.resize(images[i], (128, 128), interpolation=cv2.INTER_AREA)
+        # img_rescaled = np.empty((len(images), 128, 128, 3))
+        # for i in range(len(images)):
+        #     # Redimensiona la imagen utilizando cv2.resize()
+        #     img_rescaled[i] = cv2.resize(images[i], (128, 128), interpolation=cv2.INTER_AREA)
 
-        y_pred = model.predict(img_rescaled)
+        # apply model
+        y_pred = model.predict(images)
         # create mask from model preditions
         pred_mask = tf.math.argmax(y_pred, axis=-1)
-
+        pred_mask = pred_mask[..., np.newaxis]
         # paste into original image
         for i, pos in enumerate(positions):
-            rescaled = cv2.resize(pred_mask[i].numpy(), (256, 256), interpolation=cv2.INTER_LINEAR_EXACT)
-            rescaled = rescaled[..., np.newaxis]
-            output_img[pos[1]:pos[1] + window_size[0], pos[0]:pos[0] + window_size[1]] = rescaled
+            # rescaled = cv2.resize(pred_mask[i].numpy(), (256, 256), interpolation=cv2.INTER_LINEAR_EXACT)
+            # rescaled = rescaled[..., np.newaxis]
+            output_img[pos[1]:pos[1] + window_size[0], pos[0]:pos[0] + window_size[1]] = pred_mask[i].numpy()
 
     return output_img
 
 
-def read_img(path):
-    rimg = io.imread(path)
-    return rimg
+def down_img(img, scale=1):
+    if scale == 1:
+        return img
+    height, width, _ = img.shape
+    new_height = int(height * scale)
+    new_width = int(width * scale)
+    img = resize(img, (new_height, new_width))
+    return img
+
+
+def up_img(img, shape, order, threshold=0.5):
+    """
+    rescale image to given shape keeping the image as 0-1 np.uint8
+    :param img:
+    :param shape:
+    :param order: order of interpolation:
+            0: Nearest-neighbor
+            1: Bi-linear (default)
+            2: Bi-quadratic
+            3: Bi-cubic
+            4: Bi-quartic
+            5: Bi-quintic
+    :return:
+    """
+    img *= 255
+    img = resize(img, (shape[0], shape[1]), order=order)
+    return np.where(img >= threshold, 1, 0).astype(np.uint8)
 
 
 def build_model(model_folder, img_size=48):
@@ -145,7 +156,7 @@ if __name__ == '__main__':
 
     model_folder = cfg.results("")
     models = [
-        [os.path.join(model_folder, 'segmenter_v1.model'), 'unet_base', 1],
+        [os.path.join(model_folder, 'segmenter_v2.model'), 'unet_v2'],
     ]
     input_folder = '/media/cartografia/01_Ortofotografia/'
     output_folder = '/media/gus/data/viticola/segmentation'
@@ -154,12 +165,18 @@ if __name__ == '__main__':
     # input_images = load_pnoa_filenames(input_folder, cfg.project_file('vineyard/inference/pnoa_files.txt'))
     # input_images.sort()
 
-    input_images = [
-        '/media/gus/workspace/wml/vineyard-segmenter/resources/raster/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_extraction.tiff']
+    base_folder = "/media/gus/workspace/wml/vineyard-segmenter/resources/raster"
+    input_images = [os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-4_extraccion.tiff'),
+                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_extraction.tiff'),
+                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion.tiff'),
+                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion_B.tiff'),
+                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0425_2-1_extraccion.tiff')
+                    ]
     # input_images = [
     #     '/media/gus/data/rasters/aerial/pnoa/2020/H50_0373/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2.tif']
 
-    patch_size = 256
+    patch_size = 128
+    scale_factor = 0.5
     for m in models:
         # clear tensorflow memory
         K.clear_session()
@@ -170,23 +187,32 @@ if __name__ == '__main__':
         model = build_model(model_path)
 
         total = len(input_images)
-        for idx, input in enumerate(input_images):
-            logging.info("Processing image {} of {} - {}".format(idx, total, input))
-            filename = os.path.basename(input)
+        for idx, raster_file in enumerate(input_images):
+            logging.info("Processing image {} of {} - {}".format(idx + 1, total, raster_file))
+            filename = os.path.basename(raster_file)
             base, ext = os.path.splitext(filename)
             outf = os.path.join(output_folder, "{}_{}{}".format(base, tag, ext))
-            output_img = apply_model_slide(input, model, window_size=(patch_size, patch_size), step_size=patch_size,
-                                           batch_size=1024 * 10)
-            skimage.io.imsave(outf, output_img)
 
-            # apply_model(input, patch_size, outf, model, std_f=std_func, channels=[0, 1, 2], scale=1)
+            # load and scale the input image
+            image = io.imread(raster_file)
+            original_shape = image.shape
+            image = down_img(image, scale=scale_factor)
 
-            logging.info("Applying geolocation info.")
-            rimg = read_img(outf)
-            if len(rimg.shape) == 2:
-                rimg = rimg[:, :, np.newaxis]
-            georeference_image(rimg, input, outf, scale=1, bands=1)
-            logging.info("Finished processing file {}, \ngenerated output raster {}.".format(input, outf))
+            # apply model to rescaled image
+            logging.info("Applying model to image")
+            img_prediction = apply_model_slide(image, model, window_size=(patch_size, patch_size), step_size=patch_size,
+                                               batch_size=1024 * 10)
+            skimage.io.imsave(outf, img_prediction)
+
+            logging.info("Applying geolocation info")
+            # rimg = read_img(outf)
+            if len(img_prediction.shape) == 2:
+                img_prediction = img_prediction[:, :, np.newaxis]
+            # rescale image to original raster size
+            img_prediction = up_img(img_prediction, (original_shape[0], original_shape[1], 1), order=1)
+
+            georeference_image(img_prediction, raster_file, outf, scale=1, bands=1)
+            logging.info("Finished processing file {}, \ngenerated output raster {}.".format(raster_file, outf))
 
     # plt.show()
     logging.info("========================================")

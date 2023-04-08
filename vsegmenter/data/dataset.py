@@ -7,6 +7,9 @@ from PIL import Image
 from matplotlib import pyplot as plt
 
 import cfg
+import logging
+
+cfg.configLog()
 
 
 def create_sample(image_path, mask_path, image_size=None):
@@ -73,6 +76,7 @@ def create_segmentation_dataset(image_dir, image_size):
     Returns:
         Un objeto tf.data.Dataset que contiene las imágenes y máscaras.
     """
+    logging.info("Creating segmentation dataset")
 
     # Obtener la lista de nombres de archivo de las imágenes y máscaras
     image_names = sorted([f for f in os.listdir(image_dir) if "data" in f])
@@ -80,12 +84,14 @@ def create_segmentation_dataset(image_dir, image_size):
 
     assert len(image_names) == len(mask_names), "the list of imagen aren't same size"
 
+    logging.info(f"{len(image_names)} images found")
+
     image_paths = [os.path.join(image_dir, name) for name in image_names]
     mask_paths = [os.path.join(image_dir, name) for name in mask_names]
 
     images, masks = create_array_dataset(image_paths, mask_paths, image_size)
 
-    train_idx, test_idx = split_indexes(image_paths, train_ratio=0.8)
+    train_idx, test_idx = split_indexes(image_paths, train_ratio=0.8, shuffle=True)
 
     train_dataset = np.stack([images[i] for i in train_idx], axis=0), np.stack([masks[i] for i in train_idx], axis=0)
     test_dataset = np.stack([images[i] for i in test_idx], axis=0), np.stack([masks[i] for i in test_idx], axis=0)
@@ -108,13 +114,20 @@ def create_tf_dataset(image_paths, mask_paths, batch_size):
 
 
 def create_array_dataset(image_paths, mask_paths, image_size):
+    """
+    Create dataset array from image and mask lists
+    :param image_paths:
+    :param mask_paths:
+    :param image_size:
+    :return:
+    """
     images = []
     masks = []
+    logging.info("Creating image array")
     for image_filename, mask_filename in zip(image_paths, mask_paths):
         sample = create_sample(image_filename, mask_filename, image_size=image_size)
         images.append(sample["image"])
         masks.append(sample["mask"])
-    # create dataset from image and mask lists
     return images, masks
 
 
@@ -163,13 +176,13 @@ def split_indexes(dataset, train_ratio=0.6, test_ratio=0.2, validation_split=Fal
     # Get the total number of examples in the dataset
     num_examples = len(dataset)
 
-    # Get the indices of the examples
-    indices = list(range(num_examples))
+    # Get the index of the samples
+    indexes = list(range(num_examples))
 
     # Optionally shuffle the indices
     if shuffle:
         np.random.seed(seed)
-        np.random.shuffle(indices)
+        np.random.shuffle(indexes)
 
     # Calculate the sizes of each split
     train_size = int(train_ratio * num_examples)
@@ -177,16 +190,29 @@ def split_indexes(dataset, train_ratio=0.6, test_ratio=0.2, validation_split=Fal
     val_size = 0 if validation_split is False else num_examples - train_size - test_size
 
     # Divide the indices into three groups for the splits
-    train_indices = indices[:train_size]
-    test_indices = indices[train_size:train_size + test_size]
+    train_indices = indexes[:train_size]
+    test_indices = indexes[train_size:train_size + test_size]
 
     if val_size > 0:
-        val_indices = indices[train_size + test_size:train_size + test_size + val_size]
+        val_indices = indexes[train_size + test_size:train_size + test_size + val_size]
 
     if validation_split:
         return train_indices, test_indices, val_indices
     else:
         return train_indices, test_indices
+
+
+def create_tf_datasets(x_train, y_train, x_test, y_test, batch_size=64, shuffle=False):
+    train_dts = tf.data.Dataset.from_tensor_slices((x_train, y_train))
+    test_dts = tf.data.Dataset.from_tensor_slices((x_test, y_test))
+    if batch_size is not None:
+        train_dts = train_dts.batch(batch_size)
+        test_dts = test_dts.batch(batch_size)
+    if shuffle:
+        train_dts = train_dts.shuffle(len(x_train))
+        test_dts = test_dts.shuffle(len(x_test))
+
+    return train_dts, test_dts
 
 
 if __name__ == '__main__':

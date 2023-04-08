@@ -13,7 +13,7 @@ layer_names = [
 base_model_outputs = [base_model.get_layer(name).output for name in layer_names]
 
 # Create the feature extraction model
-down_stack = tf.keras.Model(inputs=base_model.input, outputs=base_model_outputs)
+down_stack = tf.keras.Model(inputs=base_model.raster_file, outputs=base_model_outputs)
 
 down_stack.trainable = False
 
