@@ -225,7 +225,8 @@ def run_extraction(raster_extractions, samples_file, dts_folder, rect_size, rema
         logging.info(f"Extracted samples from mask")
         extract_images(raster, raster_id, output_mask_file, samples_folder, rect_size=rect_size,
                        samples_per_category=num_samples,
-                       mixed_threshold=0.3, delete_folder=remake_folders)
+                       mixed_threshold=0.3, delete_folder=remake_folders,
+                       )
     logging.info("Image extraction finished successfully!")
 
 

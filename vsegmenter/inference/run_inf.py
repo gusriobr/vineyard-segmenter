@@ -167,10 +167,10 @@ if __name__ == '__main__':
 
     base_folder = "/media/gus/workspace/wml/vineyard-segmenter/resources/raster"
     input_images = [os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-4_extraccion.tiff'),
-                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_extraction.tiff'),
-                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion.tiff'),
-                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion_B.tiff'),
-                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0425_2-1_extraccion.tiff')
+                    # os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_extraction.tiff'),
+                    # os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion.tiff'),
+                    # os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion_B.tiff'),
+                    # os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0425_2-1_extraccion.tiff')
                     ]
     # input_images = [
     #     '/media/gus/data/rasters/aerial/pnoa/2020/H50_0373/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2.tif']

@@ -10,8 +10,8 @@ import json
 import tensorflow as tf
 
 
-def get_datasets(version, img_size=128):
-    dataset_file = cfg.dataset(f'{version}/dataset_{img_size}.pickle')
+def get_datasets(version):
+    dataset_file = cfg.dataset(f'{version}/dataset_128.pickle')
     dts = dataset.load_dataset(dataset_file)
     train_dts, test_dts = dts["train"], dts["test"]
     x_train, y_train = train_dts
