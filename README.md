@@ -35,14 +35,14 @@ categorical_crossentropy)?=0.0378 val_mean_iou=0.938 Lets add more samples iwth 
 
 
 ### Iteration v2
-![](/media/gus/workspace/wml/vineyard-segmenter/resources/assets/v2_eval1.png)
+![](resources/assets/v2_eval1.png)
 
 
 - Se ha añadido al dataset ejemplos totalmente positivos y totalmente negativos para represnetar zonas de cultivo y
   árboles. Los resultados bastante buenos, es ha aplicado el modelo en zonas no utilizadas para crear el dataset
   original y es capaz de segmentar el viñedo. Además mejora significativamente la predicción en las zonas en las que no hay presentación de viñedo.
 
-![](/media/gus/workspace/wml/vineyard-segmenter/resources/assets/v2_eval2.png)
+![](resources/assets/v2_eval2.png)
 
 
 - Si embargo tiene problemas en detectar tipos de viñedo no vistos, se han detectado tres problemas:
@@ -51,6 +51,6 @@ categorical_crossentropy)?=0.0378 val_mean_iou=0.938 Lets add more samples iwth 
   - Zonas con árboles y frutales 
   - Viñedos con terreno más oscuro. 
 
-| <img src="/media/gus/workspace/wml/vineyard-segmenter/resources/assets/v2_problems1.png" width="300"/> | <img src="/media/gus/workspace/wml/vineyard-segmenter/resources/assets/v2_problems2.png" width="300"/> | <img src="/media/gus/workspace/wml/vineyard-segmenter/resources/assets/v2_problems4.png" width="300"/> |
+| <img src="resources/assets/v2_problems1.png" width="300"/> | <img src="resources/assets/v2_problems2.png" width="300"/> | <img src="resources/assets/v2_problems4.png" width="300"/> |
 
 Para la tercera iteración se va a crear un dataset utilizando nuevos ejemplos de estas zonas y se va a re-entrenar el modelo existente. 
