@@ -5,53 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95939c3f-9411-49a4-995a-901854fb064a" name="Changes" comment="">
-<<<<<<< HEAD
-      <change afterPath="$PROJECT_DIR$/notebooks/eval_model.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run_training.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/dataset/samples.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/resources/dataset/samples.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/dataset/v1_128.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/resources/dataset/v1_128.pickle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/project.qgz" beforeDir="false" afterPath="$PROJECT_DIR$/resources/project.qgz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/raster/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_extraction_mask.tiff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/raster/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_mask.tiff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.cpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.dbf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.prj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.qpj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/selectedParcels/selectedGeometries.shx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.cpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.dbf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.prj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.qmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.shp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/vineyard_polygons/vineyard_polygons.shx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/data/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/data/dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/data/extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/data/extraction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vsegmenter/data/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/data/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/image/raster.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/image/raster.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vsegmenter/inference/run_inf.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/inference/run_inf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vsegmenter/model/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/model/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/model/unet_tf.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/model/unet_tf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vsegmenter/utils/file.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/utils/file.py" afterDir="false" />
-=======
-      <change afterPath="$PROJECT_DIR$/vsegmenter/image/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/image/raster.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/image/sliding.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/inference/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/inference/nohup.out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/inference/pnoa_files.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/inference/pnoa_files_2020.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/inference/pnoa_files_2021.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/inference/run_inf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/test_predictions.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/test_predictions.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/data/extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/data/extraction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/model/test_circles.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/model/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/model/train.py" afterDir="false" />
->>>>>>> 91b16c7e1decd4687090439a652d0c912b6d6e02
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,11 +76,8 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/vsegmenter" />
       <recent name="$PROJECT_DIR$/notebooks" />
-<<<<<<< HEAD
       <recent name="$PROJECT_DIR$/results" />
       <recent name="$PROJECT_DIR$/vsegmenter" />
-=======
->>>>>>> 91b16c7e1decd4687090439a652d0c912b6d6e02
       <recent name="$PROJECT_DIR$/vsegmenter/model" />
       <recent name="$PROJECT_DIR$/resources" />
     </key>
@@ -130,13 +87,8 @@
       <recent name="$PROJECT_DIR$/resources/raster" />
     </key>
   </component>
-<<<<<<< HEAD
-  <component name="RunManager" selected="Python.train">
-    <configuration name="extraction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-=======
-  <component name="RunManager" selected="Python.run_inf">
+  <component name="RunManager" selected="Python.run">
     <configuration name="dataset" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
->>>>>>> 91b16c7e1decd4687090439a652d0c912b6d6e02
       <module name="vineyard-segmenter" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -270,34 +222,19 @@
       <method v="2" />
     </configuration>
     <list>
-<<<<<<< HEAD
-=======
       <item itemvalue="Python.dataset" />
->>>>>>> 91b16c7e1decd4687090439a652d0c912b6d6e02
       <item itemvalue="Python.run" />
       <item itemvalue="Python.train" />
       <item itemvalue="Python.unet_tf" />
       <item itemvalue="Python.run_inf" />
-<<<<<<< HEAD
-      <item itemvalue="Python.extraction" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.train" />
         <item itemvalue="Python.run" />
-        <item itemvalue="Python.run_inf" />
-        <item itemvalue="Python.extraction" />
         <item itemvalue="Python.train" />
-=======
-    </list>
-    <recent_temporary>
-      <list>
         <item itemvalue="Python.run_inf" />
         <item itemvalue="Python.train" />
-        <item itemvalue="Python.train" />
-        <item itemvalue="Python.run" />
         <item itemvalue="Python.dataset" />
->>>>>>> 91b16c7e1decd4687090439a652d0c912b6d6e02
       </list>
     </recent_temporary>
   </component>
@@ -322,15 +259,7 @@
       <workItem from="1680639586096" duration="880000" />
       <workItem from="1680640522768" duration="608000" />
       <workItem from="1680641458431" duration="3629000" />
-<<<<<<< HEAD
-      <workItem from="1680749877145" duration="9123000" />
-      <workItem from="1680764833438" duration="2091000" />
-      <workItem from="1680793726009" duration="414000" />
-      <workItem from="1680890268831" duration="1485000" />
-      <workItem from="1680930996378" duration="6321000" />
-      <workItem from="1680967759973" duration="9756000" />
-=======
->>>>>>> 91b16c7e1decd4687090439a652d0c912b6d6e02
+      <workItem from="1681074300305" duration="130000" />
     </task>
     <servers />
   </component>
@@ -363,21 +292,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-<<<<<<< HEAD
-          <url>file://$PROJECT_DIR$/vsegmenter/model/train.py</url>
-          <line>32</line>
-          <option name="timeStamp" value="65" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/vsegmenter/data/run.py</url>
-          <line>46</line>
-          <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/vsegmenter/data/run.py</url>
-          <line>44</line>
-          <option name="timeStamp" value="67" />
-=======
           <url>file://$PROJECT_DIR$/../../wpy/venvs/basictf/lib/python3.8/site-packages/keras/metrics.py</url>
           <line>4077</line>
           <option name="timeStamp" value="19" />
@@ -391,7 +305,6 @@
           <url>file://$PROJECT_DIR$/vsegmenter/inference/run_inf.py</url>
           <line>94</line>
           <option name="timeStamp" value="32" />
->>>>>>> 91b16c7e1decd4687090439a652d0c912b6d6e02
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -406,17 +319,13 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/vineyard_segmenter$extraction.coverage" NAME="extraction Coverage Results" MODIFIED="1680754968481" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$unet.coverage" NAME="unet Coverage Results" MODIFIED="1680458144257" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
-    <SUITE FILE_PATH="coverage/vineyard_segmenter$train.coverage" NAME="train Coverage Results" MODIFIED="1680979387338" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
+    <SUITE FILE_PATH="coverage/vineyard_segmenter$train.coverage" NAME="train Coverage Results" MODIFIED="1681074122550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$unet_tf.coverage" NAME="unet_tf Coverage Results" MODIFIED="1680497930384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1680538170745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$test.coverage" NAME="test Coverage Results" MODIFIED="1680494511233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$test_circles.coverage" NAME="test_circles Coverage Results" MODIFIED="1680641057460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
-<<<<<<< HEAD
-    <SUITE FILE_PATH="coverage/vineyard_segmenter$run_inf.coverage" NAME="run_inf Coverage Results" MODIFIED="1680977585857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/inference" />
-=======
     <SUITE FILE_PATH="coverage/vineyard_segmenter$run_inf.coverage" NAME="run_inf Coverage Results" MODIFIED="1680671287502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/inference" />
->>>>>>> 91b16c7e1decd4687090439a652d0c912b6d6e02
     <SUITE FILE_PATH="coverage/vineyard_segmenter$load_dataset.coverage" NAME="load_dataset Coverage Results" MODIFIED="1680424457941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
-    <SUITE FILE_PATH="coverage/vineyard_segmenter$run.coverage" NAME="run Coverage Results" MODIFIED="1680979204211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
+    <SUITE FILE_PATH="coverage/vineyard_segmenter$run.coverage" NAME="run Coverage Results" MODIFIED="1681074347347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
   </component>
 </project>

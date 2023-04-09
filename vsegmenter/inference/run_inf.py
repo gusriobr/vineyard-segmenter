@@ -14,8 +14,8 @@ from image.raster import georeference_image
 from image.sliding import batched_sliding_window
 from vsegmenter import cfg
 
-ROOT_DIR = os.path.abspath("../../../")
-sys.path.append(ROOT_DIR)
+# ROOT_DIR = os.path.abspath("../../../")
+# sys.path.append(ROOT_DIR)
 
 layers = tf.keras.layers
 
@@ -167,7 +167,7 @@ if __name__ == '__main__':
 
     model_folder = cfg.results("")
     models = [
-        [os.path.join(model_folder, 'segmenter_v3.model'), 'unet_v3'],
+        [os.path.join(model_folder, 'unet_v3_a.model'), 'unet_v3a'],
     ]
     input_folder = '/media/cartografia/01_Ortofotografia/'
     output_folder = '/media/gus/data/viticola/segmentation'

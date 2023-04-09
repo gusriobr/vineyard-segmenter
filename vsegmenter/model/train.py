@@ -9,7 +9,7 @@ from tensorflow import keras
 
 from unet import custom_objects
 from tensorflow.python.keras import backend as K
-
+from unet.schedulers import SchedulerType
 from data.dataset import create_tf_datasets
 from vsegmenter import cfg
 from vsegmenter.data import dataset
@@ -36,15 +36,15 @@ def get_datasets(version):
 
 
 if __name__ == '__main__':
-    train_dataset, validation_dataset = get_datasets(version="v3")
+    train_dataset, validation_dataset = get_datasets(version="v4")
 
-    version = "v3_a"
+    version = "v4"
     label = "unet"
     model_file = cfg.results(f"{label}_{version}.model")
     history_file = cfg.results(f"{label}_{version}_history.json")
     log_dir_path = cfg.results(f'tmp/{label}/{datetime.now().strftime("%Y-%m-%dT%H-%M_%S")}')
 
-    prev_model = cfg.results(f"segmenter_v3.model")
+    prev_model = cfg.results(f"unet_v3_a.model")
     logging.info(f"model_file = {model_file}")
     logging.info(f"history_file = {history_file}")
     logging.info(f"log_dir_path = {log_dir_path}")
@@ -68,18 +68,21 @@ if __name__ == '__main__':
                         auc=False)
 
     callbacks = [keras.callbacks.ModelCheckpoint(log_dir_path, save_weights_only=True,
-                                                 save_best_only=True)]
+                                                 save_best_only=True),
+                 keras.callbacks.CSVLogger(log_dir_path + '_history.csv')
+                 ]
     trainer = unet.Trainer(checkpoint_callback=False,
                            tensorboard_callback=False,
                            tensorboard_images_callback=False,
+                           # learning_rate_scheduler=SchedulerType.WARMUP_LINEAR_DECAY,
                            callbacks=callbacks)
 
-    EPOCHS = 500
+    EPOCHS = 200
     LEARNING_RATE = 1e-3
     history = trainer.fit(unet_model, train_dataset, validation_dataset, epochs=EPOCHS, batch_size=32)
 
-    unet_model.save(model_file)
+    # unet_model.save(model_file)
     # unet_model.save_weights(model_file + ".h5")
 
-    with open(history_file, 'w') as f:
-        json.dump(history.history, f)
+    # with open(history_file, 'w') as f:
+    #     json.dump(history.history, f)
