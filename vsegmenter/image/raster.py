@@ -33,8 +33,6 @@ def georeference_image(img, img_source, img_filename, scale=1, bands=3, reprojec
         dataset.close()
 
         original_transform = meta["transform"]
-
-        print(meta)
         meta.update({"driver": "GTiff", "count": bands, 'dtype': 'uint8'})
         if not reproject_raster:
             meta.update({"width": img.shape[1], "height": img.shape[0]})

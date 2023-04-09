@@ -54,3 +54,23 @@ categorical_crossentropy)?=0.0378 val_mean_iou=0.938 Lets add more samples iwth 
 | <img src="resources/assets/v2_problems1.png" width="300"/> | <img src="resources/assets/v2_problems2.png" width="300"/> | <img src="resources/assets/v2_problems4.png" width="300"/> |
 
 Para la tercera iteración se va a crear un dataset utilizando nuevos ejemplos de estas zonas y se va a re-entrenar el modelo existente. 
+### Iteration v3
+
+Creando un nuevo dataset que incluye las zonas no representadas mejora significativamente las prestaciones del modelo:
+
+| <img src="resources/assets/v3_eval1_a.png" width="300"/> | <img src="resources/assets/v3_eval1_b.png" width="300"/> |
+|-----|-----|
+| <img src="resources/assets/v3_eval2_a.png" width="300"/> | <img src="resources/assets/v3_eval2_b.png" width="300"/> |
+| <img src="resources/assets/v3_eval3_a.png" width="300"/> | <img src="resources/assets/v3_eval3_b.png" width="300"/> |
+
+
+# References
+@article{akeret2017radio,
+  title={Radio frequency interference mitigation using deep convolutional neural networks},
+  author={Akeret, Joel and Chang, Chihway and Lucchi, Aurelien and Refregier, Alexandre},
+  journal={Astronomy and Computing},
+  volume={18},
+  pages={35--39},
+  year={2017},
+  publisher={Elsevier}
+}
