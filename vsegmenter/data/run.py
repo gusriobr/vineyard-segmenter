@@ -20,7 +20,8 @@ def prepare_folders(dts_folder):
 if __name__ == '__main__':
 
     version = "v4"
-    dts_folder = f'/media/gus/data/viticola/datasets/segmenter/{version}'
+    dts_folder = cfg.dataset(f'{version}')
+
     do_extraction = True
     do_create_dts = True
 
@@ -30,13 +31,13 @@ if __name__ == '__main__':
         sample_size = (256, 256)
         raster_base_folder = dts_folder + "/extractions"
         raster_samples = [
-            ['0425_1-1', {"0": 20, "1": 0, "mixed": 100},
+            ['0425_1-1', {"0": 25, "1": 0, "mixed": 100},
              os.path.join(raster_base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0425_1-1_extraction.tiff')],
             ['0425_2-1', NUM_SAMPLES_PER_RASTER,
              os.path.join(raster_base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0425_2-1_extraccion.tiff')],
             ['0398_3-1', NUM_SAMPLES_PER_RASTER,
              os.path.join(raster_base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion.tiff')],
-            ['0398_3-1B', {"0": 20, "1": 0, "mixed": 100},
+            ['0398_3-1B', {"0": 25, "1": 0, "mixed": 100},
              os.path.join(raster_base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion_B.tiff')],
             ['0345_6-4', {"0": 75, "1": 0, "mixed": 200},
              os.path.join(raster_base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-4_extraccion.tiff')],

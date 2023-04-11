@@ -17,8 +17,10 @@ def results(filename):
 def project_file(filename):
     return os.path.join(PROJECT_BASE, filename)
 
+
 def dataset(filename):
-    return os.path.join("/media/gus/data/viticola/datasets/segmenter", filename)
+    dts_base = os.environ.get('DATASET_FOLDER', default="/media/gus/data/viticola/datasets/segmenter")
+    return os.path.join(dts_base, filename)
 
 
 LOG_CONFIGURATION = True

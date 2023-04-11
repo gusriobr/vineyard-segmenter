@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95939c3f-9411-49a4-995a-901854fb064a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/vsegmenter/data/pnoa.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/dataset/samples.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/resources/dataset/samples.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/project.qgz" beforeDir="false" afterPath="$PROJECT_DIR$/resources/project.qgz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vsegmenter/cfg.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/cfg.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vsegmenter/data/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/data/run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vsegmenter/inference/run_inf.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/inference/run_inf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/model/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/model/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/utils/file.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/utils/file.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,16 +66,16 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/vsegmenter" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/results" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="build.tools" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/results" />
       <recent name="$PROJECT_DIR$/vsegmenter" />
       <recent name="$PROJECT_DIR$/notebooks" />
-      <recent name="$PROJECT_DIR$/results" />
       <recent name="$PROJECT_DIR$/vsegmenter" />
       <recent name="$PROJECT_DIR$/vsegmenter/model" />
       <recent name="$PROJECT_DIR$/resources" />
@@ -87,8 +86,8 @@
       <recent name="$PROJECT_DIR$/resources/raster" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.run">
-    <configuration name="dataset" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.pnoa">
+    <configuration name="pnoa" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="vineyard-segmenter" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -101,7 +100,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vsegmenter/data/extraction.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vsegmenter/data/pnoa.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -222,19 +221,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.dataset" />
       <item itemvalue="Python.run" />
       <item itemvalue="Python.train" />
       <item itemvalue="Python.unet_tf" />
       <item itemvalue="Python.run_inf" />
+      <item itemvalue="Python.pnoa" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.pnoa" />
+        <item itemvalue="Python.run_inf" />
         <item itemvalue="Python.run" />
         <item itemvalue="Python.train" />
-        <item itemvalue="Python.run_inf" />
         <item itemvalue="Python.train" />
-        <item itemvalue="Python.dataset" />
       </list>
     </recent_temporary>
   </component>
@@ -260,6 +259,9 @@
       <workItem from="1680640522768" duration="608000" />
       <workItem from="1680641458431" duration="3629000" />
       <workItem from="1681074300305" duration="130000" />
+      <workItem from="1681142437064" duration="2562000" />
+      <workItem from="1681224624481" duration="96000" />
+      <workItem from="1681226317750" duration="3853000" />
     </task>
     <servers />
   </component>
@@ -303,8 +305,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/vsegmenter/inference/run_inf.py</url>
-          <line>94</line>
-          <option name="timeStamp" value="32" />
+          <line>180</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/vsegmenter/inference/run_inf.py</url>
+          <line>183</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/vsegmenter/data/pnoa.py</url>
+          <line>44</line>
+          <option name="timeStamp" value="48" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -324,8 +336,9 @@
     <SUITE FILE_PATH="coverage/vineyard_segmenter$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1680538170745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$test.coverage" NAME="test Coverage Results" MODIFIED="1680494511233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$test_circles.coverage" NAME="test_circles Coverage Results" MODIFIED="1680641057460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/model" />
-    <SUITE FILE_PATH="coverage/vineyard_segmenter$run_inf.coverage" NAME="run_inf Coverage Results" MODIFIED="1680671287502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/inference" />
+    <SUITE FILE_PATH="coverage/vineyard_segmenter$run_inf.coverage" NAME="run_inf Coverage Results" MODIFIED="1681144669127" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/inference" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$load_dataset.coverage" NAME="load_dataset Coverage Results" MODIFIED="1680424457941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
     <SUITE FILE_PATH="coverage/vineyard_segmenter$run.coverage" NAME="run Coverage Results" MODIFIED="1681074347347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
+    <SUITE FILE_PATH="coverage/vineyard_segmenter$pnoa.coverage" NAME="pnoa Coverage Results" MODIFIED="1681230164946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vsegmenter/data" />
   </component>
 </project>

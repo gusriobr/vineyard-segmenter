@@ -167,7 +167,7 @@ if __name__ == '__main__':
 
     model_folder = cfg.results("")
     models = [
-        [os.path.join(model_folder, 'unet_v3_a.model'), 'unet_v3a'],
+        [os.path.join(model_folder, 'unet_v4.model'), 'unet_v4'],
     ]
     input_folder = '/media/cartografia/01_Ortofotografia/'
     output_folder = '/media/gus/data/viticola/segmentation'
@@ -176,15 +176,10 @@ if __name__ == '__main__':
     # input_images = load_pnoa_filenames(input_folder, cfg.project_file('vineyard/inference/pnoa_files.txt'))
     # input_images.sort()
 
-    base_folder = "/media/gus/workspace/wml/vineyard-segmenter/resources/raster"
-    input_images = [os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-4_extraccion.tiff'),
-                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_extraction.tiff'),
-                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion.tiff'),
-                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion_B.tiff'),
-                    os.path.join(base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0425_2-1_extraccion.tiff')
-                    ]
-    # input_images = [
-    #     '/media/gus/data/rasters/aerial/pnoa/2020/H50_0373/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2.tif']
+    dataset_version = "v4"
+    base_folder = cfg.dataset(f"{dataset_version}/extractions")
+    input_images = [os.path.join(base_folder, raster_file) for raster_file in os.listdir(base_folder) if
+                    os.path.isfile(os.path.join(base_folder, raster_file))]
 
     patch_size = 128
     scale_factor = 0.5
