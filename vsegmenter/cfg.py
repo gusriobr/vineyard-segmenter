@@ -1,12 +1,9 @@
 import logging
 import os
-import sys
 from pathlib import Path
 
-PROJECT_BASE = Path(os.path.dirname(os.path.abspath(__file__))).parent.absolute()
 
-
-def resource(filename):
+def resources(filename):
     return os.path.join(PROJECT_BASE, "resources", filename)
 
 
@@ -22,6 +19,18 @@ def dataset(filename):
     dts_base = os.environ.get('DATASET_FOLDER', default="/media/gus/data/viticola/datasets/segmenter")
     return os.path.join(dts_base, filename)
 
+
+def cartography(filename):
+    carto_base = os.environ.get('CARTOGRAPHY_BASE_FOLDER', default=CARTOGRAPHY_BASE_FOLDER)
+    return os.path.join(carto_base, filename)
+
+def pnoa(filename):
+    pnoa_base = os.environ.get('PNOA_BASE_FOLDER', default=PNOA_BASE_FOLDER)
+    return os.path.join(pnoa_base, filename)
+
+PROJECT_BASE = Path(os.path.dirname(os.path.abspath(__file__))).parent.absolute()
+PNOA_BASE_FOLDER = '/media/cartografia/01_Ortofotografia/2020/RGB'
+CARTOGRAPHY_BASE_FOLDER = "/workspaces/cartography/"
 
 LOG_CONFIGURATION = True
 

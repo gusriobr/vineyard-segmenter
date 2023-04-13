@@ -135,7 +135,7 @@ tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
 tensorflow==2.8.0
 tensorflow-datasets==4.8.3
-tensorflow-examples===5bc9f1ed519146242db5e71f00d9d39d52a308c8-
+#tensorflow-examples===5bc9f1ed519146242db5e71f00d9d39d52a308c8-
 tensorflow-io-gcs-filesystem==0.24.0
 tensorflow-metadata==1.12.0
 tensorflow-model-optimization==0.7.1

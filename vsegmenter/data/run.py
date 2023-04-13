@@ -44,7 +44,7 @@ if __name__ == '__main__':
             ['0373_7-2', NUM_SAMPLES_PER_RASTER,
              os.path.join(raster_base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_extraction.tiff')],
         ]
-        sample_file = cfg.resource('dataset/samples.sqlite')
+        sample_file = cfg.resources('dataset/samples.sqlite')
         prepare_folders(dts_folder)
         run_extraction(raster_samples, sample_file, dts_folder, sample_size, remake_folders=False)
 

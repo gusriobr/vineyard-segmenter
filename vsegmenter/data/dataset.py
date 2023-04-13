@@ -221,7 +221,7 @@ if __name__ == '__main__':
     batch_size = 64
 
     make_dataset = True
-    dts_file = cfg.resource("dataset/dataset.pickle")
+    dts_file = cfg.resources("dataset/dataset.pickle")
     if make_dataset:
         train_samples, test_samples = create_segmentation_dataset(image_dir, image_size)
         dataset = create_dataset(train_samples, test_samples)

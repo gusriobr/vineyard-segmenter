@@ -1,0 +1,305 @@
+2023-04-13 06:24:25 INFO Vectorizing image 1 of 478
+2023-04-13 06:24:25 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0344_8-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:25 INFO Polygons extracted
+/workspaces/wml/venvs/basictf/lib/python3.8/site-packages/pyproj/crs/crs.py:131: FutureWarning: '+init=<authority>:<code>' syntax is deprecated. '<authority>:<code>' is the preferred initialization method. When making the change, be mindful of axis order changes: https://pyproj4.github.io/pyproj/stable/gotchas.html#axis-order-changes-in-proj-6
+  in_crs_string = _prepare_from_proj_string(in_crs_string)
+2023-04-13 06:24:26 INFO Vectorization finished.
+2023-04-13 06:24:26 INFO Vectorizing image 2 of 478
+2023-04-13 06:24:26 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_1-5_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:26 INFO Polygons extracted
+2023-04-13 06:24:27 INFO Vectorization finished.
+2023-04-13 06:24:27 INFO Vectorizing image 3 of 478
+2023-04-13 06:24:27 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_1-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:28 INFO Polygons extracted
+2023-04-13 06:24:29 INFO Vectorization finished.
+2023-04-13 06:24:29 INFO Vectorizing image 4 of 478
+2023-04-13 06:24:29 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_2-5_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:29 INFO Polygons extracted
+2023-04-13 06:24:30 INFO Vectorization finished.
+2023-04-13 06:24:30 INFO Vectorizing image 5 of 478
+2023-04-13 06:24:30 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_2-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:30 INFO Polygons extracted
+2023-04-13 06:24:32 INFO Vectorization finished.
+2023-04-13 06:24:32 INFO Vectorizing image 6 of 478
+2023-04-13 06:24:32 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_2-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:32 INFO Polygons extracted
+2023-04-13 06:24:35 INFO Vectorization finished.
+2023-04-13 06:24:35 INFO Vectorizing image 7 of 478
+2023-04-13 06:24:35 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_3-6_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:35 INFO Polygons extracted
+2023-04-13 06:24:36 INFO Vectorization finished.
+2023-04-13 06:24:36 INFO Vectorizing image 8 of 478
+2023-04-13 06:24:36 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_3-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:36 INFO Polygons extracted
+2023-04-13 06:24:37 INFO Vectorization finished.
+2023-04-13 06:24:37 INFO Vectorizing image 9 of 478
+2023-04-13 06:24:37 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_3-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:38 INFO Polygons extracted
+2023-04-13 06:24:38 INFO Vectorization finished.
+2023-04-13 06:24:38 INFO Vectorizing image 10 of 478
+2023-04-13 06:24:38 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_4-6_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:39 INFO Polygons extracted
+2023-04-13 06:24:40 INFO Vectorization finished.
+2023-04-13 06:24:40 INFO Vectorizing image 11 of 478
+2023-04-13 06:24:40 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_4-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:40 INFO Polygons extracted
+2023-04-13 06:24:41 INFO Vectorization finished.
+2023-04-13 06:24:41 INFO Vectorizing image 12 of 478
+2023-04-13 06:24:41 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_4-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:41 INFO Polygons extracted
+2023-04-13 06:24:42 INFO Vectorization finished.
+2023-04-13 06:24:42 INFO Vectorizing image 13 of 478
+2023-04-13 06:24:42 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_5-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:42 INFO Polygons extracted
+2023-04-13 06:24:43 INFO Vectorization finished.
+2023-04-13 06:24:43 INFO Vectorizing image 14 of 478
+2023-04-13 06:24:43 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_5-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:43 INFO Polygons extracted
+2023-04-13 06:24:44 INFO Vectorization finished.
+2023-04-13 06:24:44 INFO Vectorizing image 15 of 478
+2023-04-13 06:24:44 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_6-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:45 INFO Polygons extracted
+2023-04-13 06:24:45 INFO Vectorization finished.
+2023-04-13 06:24:45 INFO Vectorizing image 16 of 478
+2023-04-13 06:24:45 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_8-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:46 INFO Polygons extracted
+2023-04-13 06:24:46 INFO Vectorization finished.
+2023-04-13 06:24:46 INFO Vectorizing image 17 of 478
+2023-04-13 06:24:46 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0313_8-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:47 INFO Polygons extracted
+2023-04-13 06:24:47 INFO Vectorization finished.
+2023-04-13 06:24:47 INFO Vectorizing image 18 of 478
+2023-04-13 06:24:47 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0314_1-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:48 INFO Polygons extracted
+2023-04-13 06:24:49 INFO Vectorization finished.
+2023-04-13 06:24:49 INFO Vectorizing image 19 of 478
+2023-04-13 06:24:49 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0314_1-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:49 INFO Polygons extracted
+2023-04-13 06:24:50 INFO Vectorization finished.
+2023-04-13 06:24:50 INFO Vectorizing image 20 of 478
+2023-04-13 06:24:50 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0314_5-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:50 INFO Polygons extracted
+2023-04-13 06:24:51 INFO Vectorization finished.
+2023-04-13 06:24:51 INFO Vectorizing image 21 of 478
+2023-04-13 06:24:51 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0314_6-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:51 INFO Polygons extracted
+2023-04-13 06:24:52 INFO Vectorization finished.
+2023-04-13 06:24:52 INFO Vectorizing image 22 of 478
+2023-04-13 06:24:52 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0314_7-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:53 INFO Polygons extracted
+2023-04-13 06:24:54 INFO Vectorization finished.
+2023-04-13 06:24:54 INFO Vectorizing image 23 of 478
+2023-04-13 06:24:54 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0314_8-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:55 INFO Polygons extracted
+2023-04-13 06:24:56 INFO Vectorization finished.
+2023-04-13 06:24:56 INFO Vectorizing image 24 of 478
+2023-04-13 06:24:56 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0314_8-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:56 INFO Polygons extracted
+2023-04-13 06:24:57 INFO Vectorization finished.
+2023-04-13 06:24:57 INFO Vectorizing image 25 of 478
+2023-04-13 06:24:57 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0315_1-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:58 INFO Polygons extracted
+2023-04-13 06:24:58 INFO Vectorization finished.
+2023-04-13 06:24:58 INFO Vectorizing image 26 of 478
+2023-04-13 06:24:58 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0315_1-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:24:59 INFO Polygons extracted
+2023-04-13 06:25:00 INFO Vectorization finished.
+2023-04-13 06:25:00 INFO Vectorizing image 27 of 478
+2023-04-13 06:25:00 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0315_2-6_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:00 INFO Polygons extracted
+2023-04-13 06:25:01 INFO Vectorization finished.
+2023-04-13 06:25:01 INFO Vectorizing image 28 of 478
+2023-04-13 06:25:01 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0315_2-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:02 INFO Polygons extracted
+2023-04-13 06:25:02 INFO Vectorization finished.
+2023-04-13 06:25:02 INFO Vectorizing image 29 of 478
+2023-04-13 06:25:02 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0315_2-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:03 INFO Polygons extracted
+2023-04-13 06:25:03 INFO Vectorization finished.
+2023-04-13 06:25:03 INFO Vectorizing image 30 of 478
+2023-04-13 06:25:03 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0315_3-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:04 INFO Polygons extracted
+2023-04-13 06:25:04 INFO Vectorization finished.
+2023-04-13 06:25:04 INFO Vectorizing image 31 of 478
+2023-04-13 06:25:04 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0315_3-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:05 INFO Polygons extracted
+2023-04-13 06:25:06 INFO Vectorization finished.
+2023-04-13 06:25:06 INFO Vectorizing image 32 of 478
+2023-04-13 06:25:06 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0344_5-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:06 INFO Polygons extracted
+2023-04-13 06:25:07 INFO Vectorization finished.
+2023-04-13 06:25:07 INFO Vectorizing image 33 of 478
+2023-04-13 06:25:07 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0344_5-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:07 INFO Polygons extracted
+2023-04-13 06:25:08 INFO Vectorization finished.
+2023-04-13 06:25:08 INFO Vectorizing image 34 of 478
+2023-04-13 06:25:08 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0344_6-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:09 INFO Polygons extracted
+2023-04-13 06:25:10 INFO Vectorization finished.
+2023-04-13 06:25:10 INFO Vectorizing image 35 of 478
+2023-04-13 06:25:10 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0344_6-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:10 INFO Polygons extracted
+2023-04-13 06:25:11 INFO Vectorization finished.
+2023-04-13 06:25:11 INFO Vectorizing image 36 of 478
+2023-04-13 06:25:11 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0344_7-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:12 INFO Polygons extracted
+2023-04-13 06:25:13 INFO Vectorization finished.
+2023-04-13 06:25:13 INFO Vectorizing image 37 of 478
+2023-04-13 06:25:13 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0344_7-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:13 INFO Polygons extracted
+2023-04-13 06:25:14 INFO Vectorization finished.
+2023-04-13 06:25:14 INFO Vectorizing image 38 of 478
+2023-04-13 06:25:14 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0344_8-6_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:15 INFO Polygons extracted
+2023-04-13 06:25:15 INFO Vectorization finished.
+2023-04-13 06:25:15 INFO Vectorizing image 39 of 478
+2023-04-13 06:25:15 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0344_8-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:16 INFO Polygons extracted
+2023-04-13 06:25:20 INFO Vectorization finished.
+2023-04-13 06:25:20 INFO Vectorizing image 40 of 478
+2023-04-13 06:25:20 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_1-6_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:20 INFO Polygons extracted
+2023-04-13 06:25:21 INFO Vectorization finished.
+2023-04-13 06:25:21 INFO Vectorizing image 41 of 478
+2023-04-13 06:25:21 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_1-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:22 INFO Polygons extracted
+2023-04-13 06:25:24 INFO Vectorization finished.
+2023-04-13 06:25:24 INFO Vectorizing image 42 of 478
+2023-04-13 06:25:24 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_2-6_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:25 INFO Polygons extracted
+2023-04-13 06:25:25 INFO Vectorization finished.
+2023-04-13 06:25:25 INFO Vectorizing image 43 of 478
+2023-04-13 06:25:25 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_3-1_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:26 INFO Polygons extracted
+2023-04-13 06:25:26 INFO Vectorization finished.
+2023-04-13 06:25:26 INFO Vectorizing image 44 of 478
+2023-04-13 06:25:26 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_3-2_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:27 INFO Polygons extracted
+2023-04-13 06:25:28 INFO Vectorization finished.
+2023-04-13 06:25:28 INFO Vectorizing image 45 of 478
+2023-04-13 06:25:28 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_3-5_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:28 INFO Polygons extracted
+2023-04-13 06:25:29 INFO Vectorization finished.
+2023-04-13 06:25:29 INFO Vectorizing image 46 of 478
+2023-04-13 06:25:29 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_3-6_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:30 INFO Polygons extracted
+2023-04-13 06:25:30 INFO Vectorization finished.
+2023-04-13 06:25:30 INFO Vectorizing image 47 of 478
+2023-04-13 06:25:30 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_3-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:31 INFO Polygons extracted
+2023-04-13 06:25:31 INFO Vectorization finished.
+2023-04-13 06:25:31 INFO Vectorizing image 48 of 478
+2023-04-13 06:25:31 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_3-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:32 INFO Polygons extracted
+2023-04-13 06:25:33 INFO Vectorization finished.
+2023-04-13 06:25:33 INFO Vectorizing image 49 of 478
+2023-04-13 06:25:33 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_4-1_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:33 INFO Polygons extracted
+2023-04-13 06:25:34 INFO Vectorization finished.
+2023-04-13 06:25:34 INFO Vectorizing image 50 of 478
+2023-04-13 06:25:34 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_4-2_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:34 INFO Polygons extracted
+2023-04-13 06:25:36 INFO Vectorization finished.
+2023-04-13 06:25:36 INFO Vectorizing image 51 of 478
+2023-04-13 06:25:36 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_4-3_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:37 INFO Polygons extracted
+2023-04-13 06:25:38 INFO Vectorization finished.
+2023-04-13 06:25:38 INFO Vectorizing image 52 of 478
+2023-04-13 06:25:38 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_4-4_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:38 INFO Polygons extracted
+2023-04-13 06:25:39 INFO Vectorization finished.
+2023-04-13 06:25:39 INFO Vectorizing image 53 of 478
+2023-04-13 06:25:39 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_4-5_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:40 INFO Polygons extracted
+2023-04-13 06:25:40 INFO Vectorization finished.
+2023-04-13 06:25:40 INFO Vectorizing image 54 of 478
+2023-04-13 06:25:40 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_4-6_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:41 INFO Polygons extracted
+2023-04-13 06:25:41 INFO Vectorization finished.
+2023-04-13 06:25:41 INFO Vectorizing image 55 of 478
+2023-04-13 06:25:41 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_4-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:42 INFO Polygons extracted
+2023-04-13 06:25:43 INFO Vectorization finished.
+2023-04-13 06:25:43 INFO Vectorizing image 56 of 478
+2023-04-13 06:25:43 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_4-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:43 INFO Polygons extracted
+2023-04-13 06:25:44 INFO Vectorization finished.
+2023-04-13 06:25:44 INFO Vectorizing image 57 of 478
+2023-04-13 06:25:44 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_5-1_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:44 INFO Polygons extracted
+2023-04-13 06:25:46 INFO Vectorization finished.
+2023-04-13 06:25:46 INFO Vectorizing image 58 of 478
+2023-04-13 06:25:46 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_5-2_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:46 INFO Polygons extracted
+2023-04-13 06:25:49 INFO Vectorization finished.
+2023-04-13 06:25:49 INFO Vectorizing image 59 of 478
+2023-04-13 06:25:49 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_5-3_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:49 INFO Polygons extracted
+2023-04-13 06:25:50 INFO Vectorization finished.
+2023-04-13 06:25:50 INFO Vectorizing image 60 of 478
+2023-04-13 06:25:50 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_5-4_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:50 INFO Polygons extracted
+2023-04-13 06:25:52 INFO Vectorization finished.
+2023-04-13 06:25:52 INFO Vectorizing image 61 of 478
+2023-04-13 06:25:52 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_5-5_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:53 INFO Polygons extracted
+2023-04-13 06:25:56 INFO Vectorization finished.
+2023-04-13 06:25:56 INFO Vectorizing image 62 of 478
+2023-04-13 06:25:56 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_5-6_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:25:56 INFO Polygons extracted
+2023-04-13 06:26:03 INFO Vectorization finished.
+2023-04-13 06:26:03 INFO Vectorizing image 63 of 478
+2023-04-13 06:26:03 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_5-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:26:03 INFO Polygons extracted
+2023-04-13 06:26:08 INFO Vectorization finished.
+2023-04-13 06:26:08 INFO Vectorizing image 64 of 478
+2023-04-13 06:26:08 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_5-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:26:08 INFO Polygons extracted
+2023-04-13 06:26:10 INFO Vectorization finished.
+2023-04-13 06:26:10 INFO Vectorizing image 65 of 478
+2023-04-13 06:26:10 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-1_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:26:11 INFO Polygons extracted
+2023-04-13 06:26:13 INFO Vectorization finished.
+2023-04-13 06:26:13 INFO Vectorizing image 66 of 478
+2023-04-13 06:26:13 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-2_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:26:14 INFO Polygons extracted
+2023-04-13 06:26:16 INFO Vectorization finished.
+2023-04-13 06:26:16 INFO Vectorizing image 67 of 478
+2023-04-13 06:26:16 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-3_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:26:17 INFO Polygons extracted
+2023-04-13 06:26:21 INFO Vectorization finished.
+2023-04-13 06:26:21 INFO Vectorizing image 68 of 478
+2023-04-13 06:26:21 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-4_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:26:21 INFO Polygons extracted
+2023-04-13 06:26:29 INFO Vectorization finished.
+2023-04-13 06:26:29 INFO Vectorizing image 69 of 478
+2023-04-13 06:26:29 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-5_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:26:29 INFO Polygons extracted
+2023-04-13 06:26:37 INFO Vectorization finished.
+2023-04-13 06:26:37 INFO Vectorizing image 70 of 478
+2023-04-13 06:26:37 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-6_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:26:37 INFO Polygons extracted
+2023-04-13 06:26:47 INFO Vectorization finished.
+2023-04-13 06:26:47 INFO Vectorizing image 71 of 478
+2023-04-13 06:26:47 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-7_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:26:47 INFO Polygons extracted
+2023-04-13 06:26:57 INFO Vectorization finished.
+2023-04-13 06:26:57 INFO Vectorizing image 72 of 478
+2023-04-13 06:26:57 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-8_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:26:57 INFO Polygons extracted
+2023-04-13 06:27:05 INFO Vectorization finished.
+2023-04-13 06:27:05 INFO Vectorizing image 73 of 478
+2023-04-13 06:27:05 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_7-1_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:27:05 INFO Polygons extracted
+2023-04-13 06:27:06 INFO Vectorization finished.
+2023-04-13 06:27:06 INFO Vectorizing image 74 of 478
+2023-04-13 06:27:06 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_7-2_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:27:07 INFO Polygons extracted
+2023-04-13 06:27:08 INFO Vectorization finished.
+2023-04-13 06:27:08 INFO Vectorizing image 75 of 478
+2023-04-13 06:27:08 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_7-3_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:27:09 INFO Polygons extracted
+2023-04-13 06:27:15 INFO Vectorization finished.
+2023-04-13 06:27:15 INFO Vectorizing image 76 of 478
+2023-04-13 06:27:15 INFO Started image vectorization from raster /workspaces/wml/vineyard-segmenter/results/processed/v4/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_7-4_unet_v4.tif into shapefile /workspaces/wml/vineyard-segmenter/results/processed/v4/polygons_v4.shp
+2023-04-13 06:27:15 INFO Polygons extracted

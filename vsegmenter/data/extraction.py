@@ -237,7 +237,7 @@ determines the number of samples to get from each raster representing each categ
 DEFAULT_NUM_SAMPLES = {"0": 300, "1": 100, "mixed": 600}
 
 if __name__ == '__main__':
-    samples_file = cfg.resource('dataset/samples.sqlite')
+    samples_file = cfg.resources('dataset/samples.sqlite')
     sample_size = (256, 256)
 
     version = "v1"

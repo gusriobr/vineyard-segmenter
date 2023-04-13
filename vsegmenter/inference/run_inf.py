@@ -140,50 +140,75 @@ def load_pnoa_filenames(base_folder, tile_file):
     :param base_folder:
     :return:
     """
+    logging.info(f"Listing pnoa tiles from file {tile_file} using base folder {base_folder}")
+
     lines = open(tile_file).read().splitlines()
     files = set()
     for line in lines:
-        if line:  # not empty
-            # is a file
-            fabs = "{}/{}"
-            if os.path.exists(fabs) and os.path.isfile(fabs):
-                files.add(fabs)
+        if not line:  # empty line
+            continue
+        # is a file
+        fabs = line if os.path.isabs(line) else f"{base_folder}/{line}"
+        if os.path.exists(fabs) and os.path.isfile(fabs):
+            files.add(fabs)
+        else:
+            nested_files = glob.glob("{}/{}/*.tif".format(base_folder, line))
+            if len(nested_files) > 0:
+                # it has nested tif
+                files.update(nested_files)
             else:
-                nested_files = glob.glob("{}/{}/*.tif".format(base_folder, line))
-                if len(nested_files) > 0:
-                    # it has nested tif
-                    files.update(nested_files)
-                else:
-                    # it has nested folders with tifs
-                    nested_files = glob.glob("{}/{}/**/*.tif".format(base_folder, line))
-                    files.update(nested_files)
+                # it has nested folders with tifs
+                nested_files = glob.glob("{}/{}/**/*.tif".format(base_folder, line))
+                files.update(nested_files)
     lst_files = list(files)
     lst_files.sort()
     return lst_files
 
+def is_cuda_disabled():
+    cuda_env_var = os.environ.get('CUDA_VISIBLE_DEVICES', '')
+    return not cuda_env_var
 
 if __name__ == '__main__':
+    version = 4
     # load srs model
+    pnoa_index_file = None
+    if len(sys.argv) > 1:
+        pnoa_index_file = sys.argv[1]
+        logging.info(f"Received as parameter pnoa index file: {pnoa_index_file}")
+
+    if pnoa_index_file is None:
+        # default index file for testing
+        pnoa_index_file = cfg.project_file('vsegmenter/inference/pnoa_files.txt')
+        pnoa_index_file = cfg.resources('pnoa_ribera.txt')
+
+    logging.info(f"IS_CUDA_DISABLED = : {is_cuda_disabled()}")
+
+
+
 
     model_folder = cfg.results("")
+
     models = [
-        [os.path.join(model_folder, 'unet_v4.model'), 'unet_v4'],
+        [os.path.join(model_folder, f"unet_v{version}.model"), f'unet_v{version}'],
     ]
-    input_folder = '/media/cartografia/01_Ortofotografia/'
-    output_folder = '/media/gus/data/viticola/segmentation'
+    output_folder = cfg.results(f"processed/v{version}")
 
     # find all nested images
-    # input_images = load_pnoa_filenames(input_folder, cfg.project_file('vineyard/inference/pnoa_files.txt'))
-    # input_images.sort()
+    input_images = load_pnoa_filenames(cfg.PNOA_BASE_FOLDER, pnoa_index_file)
+    # dataset_version = "v4"
+    # base_folder = cfg.dataset(f"{dataset_version}/extractions")
+    # input_images = [os.path.join(base_folder, raster_file) for raster_file in os.listdir(base_folder) if
+    #                 os.path.isfile(os.path.join(base_folder, raster_file))]
 
-    dataset_version = "v4"
-    base_folder = cfg.dataset(f"{dataset_version}/extractions")
-    input_images = [os.path.join(base_folder, raster_file) for raster_file in os.listdir(base_folder) if
-                    os.path.isfile(os.path.join(base_folder, raster_file))]
+    logging.info(f"Number of input images to process: {len(input_images)}")
 
     patch_size = 128
     scale_factor = 0.5
+    SLIDING_BATCH_SIZE = 2048 * 80 if not is_cuda_disabled() else 2048 * 80
+    logging.info(f"SLIDING_BATCH_SIZE: {SLIDING_BATCH_SIZE}")
+    # input_images = input_images[:2]
     for m in models:
+        logging.info(f"Running model: {m}")
         # clear tensorflow memory
         K.clear_session()
         tf.keras.backend.clear_session()
@@ -207,7 +232,7 @@ if __name__ == '__main__':
             # apply model to rescaled image
             logging.info("Applying model to image")
             img_prediction = apply_model_slide(image, model, window_size=(patch_size, patch_size), step_size=patch_size,
-                                               batch_size=1024 * 10)
+                                               batch_size=SLIDING_BATCH_SIZE)
             skimage.io.imsave(outf, img_prediction)
 
             logging.info("Applying geolocation info")
@@ -222,5 +247,5 @@ if __name__ == '__main__':
 
     # plt.show()
     logging.info("========================================")
-    logging.info("Model inference  on raster finished.")
+    logging.info("Model inference on raster files finished.")
     logging.info("========================================")
