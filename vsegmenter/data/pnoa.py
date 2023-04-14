@@ -5,20 +5,17 @@ Script para creación del índice de tiles pnoa
 import os
 import rasterio
 import geopandas as gpd
-import sqlite3
 from shapely.geometry import box
 
 import cfg
 import logging
 
+from geo.spatialite import create_connection, create_spatialite_table
+
 cfg.configLog()
 
-
-def create_spatialite_table(sqlite_path):
-    conn = create_connection(sqlite_path)
-
-    cursor = conn.cursor()
-    cursor.execute("""
+TABLE_PNOA_TILES = {"name": "pnoa_tiles",
+                    "sql": """
         CREATE TABLE IF NOT EXISTS pnoa_tiles (
             id INTEGER PRIMARY KEY,
             filename TEXT NOT NULL,
@@ -30,17 +27,7 @@ def create_spatialite_table(sqlite_path):
             provmunis TEXT NOT NULL,
             ines TEXT NOT NULL
         )
-    """)
-    cursor.execute("SELECT InitSpatialMetaData(1);")
-    cursor.execute("SELECT AddGeometryColumn('pnoa_tiles', 'geom', 4326, 'POLYGON', 'XY');")
-    conn.commit()
-
-
-def create_connection(sqlite_path):
-    conn = sqlite3.connect(sqlite_path)
-    conn.enable_load_extension(True)
-    conn.load_extension("mod_spatialite")
-    return conn
+    """}
 
 
 def insert_into_pnoa_tiles(conn, data, geom):
@@ -111,7 +98,8 @@ def create_pnoa_index(raster_dir, output_path, muni_file):
     # Cargar los municipios
     municipalities_gdf = gpd.read_file(muni_file)
 
-    create_spatialite_table(output_path)
+    create_spatialite_table(output_path, TABLE_PNOA_TILES["name"], TABLE_PNOA_TILES["sql"], geomtry_col="geom",
+                            srid=4326)
 
     raster_files = locate_raster_files(raster_dir)
 

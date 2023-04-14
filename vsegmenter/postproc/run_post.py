@@ -3,59 +3,81 @@ Post processing to create feature file out from raster images
 """
 import logging
 import os
-from collections import OrderedDict
+import sys
 
 import fiona
 import rasterio
-import sys
-from fiona.crs import from_epsg
 from rasterio import features
 from shapely.geometry import shape
+import pyproj
+
+import geo.spatialite as spt
+import geo.vectors as geov
+from geo import proj
 
 ROOT_DIR = os.path.abspath("../../")
 sys.path.append(ROOT_DIR)
 
 from vsegmenter import cfg
-from vsegmenter.geo import proj
 
 cfg.configLog()
 
 
-def vectorize_predictions(raster_file, shape_file, filter_value=1, feature_filter=None):
-    logging.info("Started image vectorization from raster {} into shapefile {}".format(raster_file, shape_file))
-    polys = None
-    raster_crs = None
+def vectorize_predictions(raster_file, db_file, filter_value=1, feature_filter=None, db_file_srid=4258):
+    logging.info("Started image vectorization from raster {} into shapefile {}".format(raster_file, db_file))
+
     with rasterio.open(raster_file) as src:
         img = src.read()
         mask = img == filter_value
         polys = features.shapes(img, mask=mask, transform=src.transform)
         raster_crs = src.crs
-    logging.info("Polygons extracted")
 
-    # if file exist append otherwise create
-    feature_crs = from_epsg(4258)  # ETRS89
-    if os.path.exists(shape_file):
-        open_f = fiona.open(shape_file, 'a')
-    else:
-        # output_driver = "GeoJSON"
-        output_driver = 'ESRI Shapefile'
-        vineyard_schema = {
-            'geometry': 'Polygon',
-            'properties': OrderedDict([('FID', 'int')])
-        }
-        open_f = fiona.open(shape_file, 'w', driver=output_driver, crs=feature_crs, schema=vineyard_schema)
+    # transform polygons to db srid
+    logging.info(f"Raster file read.")
+    polys = [shape(p[0]) for p in polys]
+    logging.info(f"Merging overlapping vectorized {len(polys)} polygons.")
+    polys = geov.merge_polygons(polys, multiparts=False)
 
-    with open_f as c:
-        for p in polys:
-            if feature_filter and not feature_filter(p[0]):
-                # se ha definido el filtro y devuelve False
-                continue
-            p = list(p)
-            p[0] = proj.transform(raster_crs, feature_crs, p[0])
-            poly_feature = {"geometry": p[0], "properties": {"FID": 0}}
-            c.write(poly_feature)
+    logging.info(f"Projecting {len(polys)} from srid={raster_crs} and into srid={db_file_srid}")
+    polys = [shape(proj.transform(raster_crs, db_file_srid, p)) for p in polys]
+
+    if feature_filter:
+        polys = [p for p in polys if feature_filter(p)]
+    logging.info(f"Polygons after filtering {len(polys)}")
+    polys = geov.remove_interior_rings(polys)
+
+    # create extent for current polygons
+    poly_ext = geov.get_extent(polys)
+
+    layer_name = VINEYARD_LAYER["name"]
+    geometry_column = "geom"
+    if not os.path.exists(db_file):
+        spt.create_spatialite_table(db_file, layer_name, VINEYARD_LAYER["sql"], geomtry_col=geometry_column,
+                                    srid=db_file_srid)
+    # find polygons stores in the same area as current polygons
+    polys_found = spt.list_by_geometry(db_file, layer_name, geometry_column, poly_ext, db_file_srid)
+
+    # merge all polygons
+    logging.info(f"Merging {len(polys_found)} polygons found in vineyard layer.")
+    polys.extend(polys_found)
+    polys = geov.merge_polygons(polys, multiparts=False)
+    logging.info(f"Final merged polygons: {len(polys)}.")
+
+    # remove existing polygons in the extent and insert new ones
+    logging.info("Removing preexisting polygons.")
+    spt.remove_by_geometry(db_file, layer_name, geometry_column, poly_ext, db_file_srid)
+    logging.info(f"Inserting final {len(polys)} polygons.")
+    spt.insert_polygons(db_file, layer_name, geometry_column, polys, srid=db_file_srid)
 
     logging.info("Vectorization finished.")
+
+
+VINEYARD_LAYER = {"name": "vineyard",
+                  "sql": """
+        CREATE TABLE IF NOT EXISTS vineyard (
+            id INTEGER PRIMARY KEY
+        )
+    """}
 
 
 def filter_by_area(min_area):
@@ -78,16 +100,20 @@ def filter_features(input_file, output_file):
 
 
 if __name__ == '__main__':
+
+    ### test filtering
+
     iteration = 4
 
     input_folder = cfg.results(f"processed/v{iteration}")
     input_images = [os.path.join(input_folder, f_img) for f_img in os.listdir(input_folder) if f_img.endswith(".tif")]
-    output_file = cfg.results(f"processed/v{iteration}/polygons_v{iteration}.shp")
+    # output_file = cfg.results(f"processed/v{iteration}/polygons_v{iteration}.shp")
+    output_file = cfg.results(f"processed/v{iteration}/polygons_v{iteration}.sqlite")
 
     total = len(input_images)
     for i, f_image in enumerate(input_images):
         logging.info("Vectorizing image {} of {}".format(i + 1, total))
-        vectorize_predictions(f_image, output_file, feature_filter=filter_by_area(min_area=450))
+        vectorize_predictions(f_image, output_file, feature_filter=filter_by_area(min_area=450), db_file_srid=25830)
 
     # filtered_output_file = output_file.replace(".shp", "_filtered.shp")
     # logging.info(f"Filtering out small polygons into {filtered_output_file}")
