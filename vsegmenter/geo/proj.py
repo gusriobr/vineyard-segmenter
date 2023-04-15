@@ -24,7 +24,6 @@ def transform(src_epsg, dest_epsg, shapely_polygons):
 
     transform_poly(src_epsg, dest_epsg, poly)
     """
-    return_list = True
     return_list = isinstance(shapely_polygons, list)
     if not return_list:
         shapely_polygons = [shapely_polygons]

@@ -9,8 +9,8 @@ import fiona
 import rasterio
 from rasterio import features
 from shapely.geometry import shape
-import pyproj
-
+from shapely.geometry import Polygon
+from shapely.geometry import mapping
 import geo.spatialite as spt
 import geo.vectors as geov
 from geo import proj
@@ -21,6 +21,13 @@ sys.path.append(ROOT_DIR)
 from vsegmenter import cfg
 
 cfg.configLog()
+
+
+def simplify_polygon(shapely_polygon, simply_threshold1=1.5, simply_threshold2=3, buffer_distance=1):
+    simplified_polygon = shapely_polygon.simplify(tolerance=simply_threshold1)
+    simplified_polygon = simplified_polygon.simplify(tolerance=simply_threshold2)
+    simplified_polygon = simplified_polygon.buffer(distance=buffer_distance)
+    return simplified_polygon
 
 
 def vectorize_predictions(raster_file, db_file, filter_value=1, feature_filter=None, db_file_srid=4258):
@@ -87,16 +94,17 @@ def filter_by_area(min_area):
     return area_filter
 
 
-def filter_features(input_file, output_file):
+def simplify_features(input_file, output_file):
     with fiona.open(input_file) as source:
         source_driver = source.driver
         source_crs = source.crs
         source_schema = source.schema
-        polys_filtered = list(filter(filter_by_area, source))
+        polys_filtered = [simplify_polygon(shape(p["geometry"])) for p in source]
 
     with fiona.open(output_file, "w", driver=source_driver, schema=source_schema, crs=source_crs) as dest:
         for r in polys_filtered:
-            dest.write(r)
+            feature = {'geometry': mapping(r), 'properties': {}}
+            dest.write(feature)
 
 
 if __name__ == '__main__':
@@ -111,12 +119,12 @@ if __name__ == '__main__':
     output_file = cfg.results(f"processed/v{iteration}/polygons_v{iteration}.sqlite")
 
     total = len(input_images)
-    for i, f_image in enumerate(input_images):
-        logging.info("Vectorizing image {} of {}".format(i + 1, total))
-        vectorize_predictions(f_image, output_file, feature_filter=filter_by_area(min_area=450), db_file_srid=25830)
+    # for i, f_image in enumerate(input_images):
+    #     logging.info("Vectorizing image {} of {}".format(i + 1, total))
+    #     vectorize_predictions(f_image, output_file, feature_filter=filter_by_area(min_area=450), db_file_srid=25830)
 
-    # filtered_output_file = output_file.replace(".shp", "_filtered.shp")
-    # logging.info(f"Filtering out small polygons into {filtered_output_file}")
-    # filter_features(output_file, filtered_output_file)
+    filtered_output_file = output_file.replace(".sqlite", "_filtered.sqlite")
+    logging.info(f"Simplifying polygons into {filtered_output_file}")
+    simplify_features(output_file, filtered_output_file)
 
     logging.info("Vectorized geometries successfully written.")

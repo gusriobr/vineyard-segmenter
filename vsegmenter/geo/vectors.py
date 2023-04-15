@@ -78,3 +78,4 @@ def get_extent(shapely_geometries):
     return Polygon([(min_x, min_y), (min_x, max_y), (max_x, max_y), (max_x, min_y), (min_x, min_y)])
 
 
+
