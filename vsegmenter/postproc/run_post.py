@@ -119,9 +119,9 @@ if __name__ == '__main__':
     output_file = cfg.results(f"processed/v{iteration}/polygons_v{iteration}.sqlite")
 
     total = len(input_images)
-    # for i, f_image in enumerate(input_images):
-    #     logging.info("Vectorizing image {} of {}".format(i + 1, total))
-    #     vectorize_predictions(f_image, output_file, feature_filter=filter_by_area(min_area=450), db_file_srid=25830)
+    for i, f_image in enumerate(input_images):
+        logging.info("Vectorizing image {} of {}".format(i + 1, total))
+        vectorize_predictions(f_image, output_file, feature_filter=filter_by_area(min_area=450), db_file_srid=25830)
 
     filtered_output_file = output_file.replace(".sqlite", "_filtered.sqlite")
     logging.info(f"Simplifying polygons into {filtered_output_file}")
