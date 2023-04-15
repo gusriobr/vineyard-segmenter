@@ -51,6 +51,10 @@ def vectorize_predictions(raster_file, db_file, filter_value=1, feature_filter=N
     if feature_filter:
         polys = [p for p in polys if feature_filter(p)]
     logging.info(f"Polygons after filtering {len(polys)}")
+    if len(polys) == 0:
+        logging.info(f"No polygons to process, skipping")
+        return
+
     polys = geov.remove_interior_rings(polys)
 
     # create extent for current polygons
