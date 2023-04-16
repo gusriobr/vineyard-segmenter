@@ -77,11 +77,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/scripts" />
@@ -235,7 +235,8 @@
       <workItem from="1681482658150" duration="2866000" />
       <workItem from="1681491478344" duration="832000" />
       <workItem from="1681536124694" duration="1651000" />
-      <workItem from="1681541748804" duration="357000" />
+      <workItem from="1681541748804" duration="1024000" />
+      <workItem from="1681631509317" duration="661000" />
     </task>
     <servers />
   </component>
@@ -294,7 +295,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/vsegmenter/postproc/run_post.py</url>
-          <line>109</line>
+          <line>111</line>
           <option name="timeStamp" value="112" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
