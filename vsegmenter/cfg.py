@@ -24,13 +24,16 @@ def cartography(filename):
     carto_base = os.environ.get('CARTOGRAPHY_BASE_FOLDER', default=CARTOGRAPHY_BASE_FOLDER)
     return os.path.join(carto_base, filename)
 
+
 def pnoa(filename):
     pnoa_base = os.environ.get('PNOA_BASE_FOLDER', default=PNOA_BASE_FOLDER)
     return os.path.join(pnoa_base, filename)
 
+
 PROJECT_BASE = Path(os.path.dirname(os.path.abspath(__file__))).parent.absolute()
-PNOA_BASE_FOLDER = '/media/cartografia/01_Ortofotografia/2020/RGB'
-CARTOGRAPHY_BASE_FOLDER = "/workspaces/cartography/"
+# '/media/cartografia/01_Ortofotografia/2020/RGB'
+PNOA_BASE_FOLDER = os.environ.get('PNOA_BASE_FOLDER', default='/media/gus/data/rasters/aerial/pnoa/2020')
+CARTOGRAPHY_BASE_FOLDER = os.environ.get('CARTOGRAPHY_BASE_FOLDER', default="/workspaces/cartography/")
 
 LOG_CONFIGURATION = True
 

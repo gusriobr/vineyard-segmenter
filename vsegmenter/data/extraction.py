@@ -1,6 +1,7 @@
 """
 - Extract polygons
 """
+import logging
 import os
 import random
 
@@ -11,15 +12,11 @@ import spatialite
 from PIL import Image
 from rasterio import features
 from rasterio.features import geometry_mask
-import tensorflow as tf
-import numpy as np
-import os
 
 # Must used recent master (pypi version appears broken as of 8/18/2014)
 # pip install "git+https://github.com/lokkju/pyspatialite.git@94a4522e58#pyspatialite"
 import cfg
 from utils.file import remake_folder
-import logging
 
 cfg.configLog()
 
@@ -151,9 +148,10 @@ def extract_images(src_file, file_id, mask_file, dst_folder, samples_per_categor
     logging.info(f"Extracted {init_counter} images")
 
 
-def get_random_images(dst_folder, image_filter, mask_file, prefix, init_counter, num_polygons, rect_size, src_file):
+def get_random_images(dst_folder, image_filter, mask_file, prefix, init_counter, num_polygons, rect_size, src_file,
+                      max_iterations=100_00):
     """
-
+    Get ramdon images from dastaset folder
     :param dst_folder:
     :param image_filter:
     :param mask_file:
@@ -172,6 +170,7 @@ def get_random_images(dst_folder, image_filter, mask_file, prefix, init_counter,
     height = src.height
     # Iterar sobre el número de rectángulos
     i = 0
+    num_iterations = 0
     while i < num_polygons:
         # Seleccionar una ubicación aleatoria para el rectángulo
         x = random.randint(0, width - rect_size[0])
@@ -183,6 +182,10 @@ def get_random_images(dst_folder, image_filter, mask_file, prefix, init_counter,
         # read mask data and check at least each category is represented by a % of pixes
         mask_data = mask.read(window=window)
         mask_data = np.squeeze(mask_data)
+        num_iterations += 1
+        if num_iterations > max_iterations:
+            raise ValueError(
+                f"Couldn't extract enough images after {max_iterations} iterations found {i}. Check the image mask: {mask_file}")
         if not image_filter(mask_data):
             continue
         # logging.info(f"Got {i}")
@@ -209,7 +212,7 @@ def check_categories(mask_data, zero_threshold=None, one_threshold=None):
 
 
 def run_extraction(raster_extractions, samples_file, dts_folder, rect_size, remake_folders=True):
-    logging.info(f"Staring dataset extraction on folder: {dts_folder}")
+    logging.info(f"Starting dataset extraction on folder: {dts_folder}")
     output_mask_folder = dts_folder + "/masks"
     samples_folder = dts_folder + "/samples"
     # re-create folders

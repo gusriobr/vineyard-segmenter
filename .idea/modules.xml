@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../pnoa-inspector/.idea/pnoa-inspector.iml" filepath="$PROJECT_DIR$/../pnoa-inspector/.idea/pnoa-inspector.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/vineyard-segmenter.iml" filepath="$PROJECT_DIR$/.idea/vineyard-segmenter.iml" />
     </modules>
   </component>

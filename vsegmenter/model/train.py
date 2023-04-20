@@ -10,29 +10,13 @@ from tensorflow import keras
 from unet import custom_objects
 from tensorflow.python.keras import backend as K
 from unet.schedulers import SchedulerType
-from data.dataset import create_tf_datasets
+from data.dataset import create_tf_datasets, get_datasets
 from vsegmenter import cfg
 from vsegmenter.data import dataset
 
 import logging
 
 cfg.configLog()
-
-
-def get_datasets(version):
-    dataset_file = cfg.dataset(f'{version}/dataset_128.pickle')
-    dts = dataset.load_dataset(dataset_file)
-    train_dts, test_dts = dts["train"], dts["test"]
-    x_train, y_train = train_dts
-    x_test, y_test = test_dts
-    # x_train = x_train[0:32]
-    # y_train = y_train[0:32]
-    # x_test = x_test[0:32]
-    # y_test = y_test[0:32]
-    logging.info(f"Number of train samples: {len(x_train)}, test samples = {len(x_test)}")
-    logging.info(f"Sample dimensions: sample: {x_train[0].shape} label (mask): {y_train[0].shape}")
-    logging.info("Original image shape : {}".format(x_train.shape))
-    return create_tf_datasets(x_train, y_train, x_test, y_test, batch_size=None)
 
 
 if __name__ == '__main__':

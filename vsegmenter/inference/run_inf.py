@@ -10,6 +10,7 @@ from skimage import io
 from skimage.transform import resize
 from tensorflow.python.keras import backend as K
 
+from data.dataset import Dataset
 from image.raster import georeference_image
 from image.sliding import batched_sliding_window
 from vsegmenter import cfg
@@ -70,7 +71,7 @@ def apply_model_slide(image, model, window_size=(48, 48), step_size=48, batch_si
 
         # apply model
         y_pred = model.predict(images)
-        # create mask from model preditions
+        # create mask from model predictions
         pred_mask = tf.math.argmax(y_pred, axis=-1)
         pred_mask = pred_mask[..., np.newaxis]
         # paste into original image
@@ -195,16 +196,17 @@ if __name__ == '__main__':
 
     # find all nested images
     input_images = load_pnoa_filenames(cfg.PNOA_BASE_FOLDER, pnoa_index_file)
-    # dataset_version = "v4"
-    # base_folder = cfg.dataset(f"{dataset_version}/extractions")
-    # input_images = [os.path.join(base_folder, raster_file) for raster_file in os.listdir(base_folder) if
-    #                 os.path.isfile(os.path.join(base_folder, raster_file))]
 
+    # by default use extraction files from dataset
+    dts = Dataset(dts_folder='/media/gus/data/viticola/datasets/segmenter/v5')
+    input_images = dts.get_extration_files()
+
+    output_folder = '/tmp/salidas/'
     logging.info(f"Number of input images to process: {len(input_images)}")
 
     patch_size = 128
     scale_factor = 0.5
-    SLIDING_BATCH_SIZE = 2048 * 80 if not is_cuda_disabled() else 2048 * 80
+    SLIDING_BATCH_SIZE = 2048
     logging.info(f"SLIDING_BATCH_SIZE: {SLIDING_BATCH_SIZE}")
     # input_images = input_images[:2]
     for m in models:
