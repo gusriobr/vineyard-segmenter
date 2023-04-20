@@ -15,18 +15,20 @@ import geo.spatialite as spt
 import geo.vectors as geov
 from geo import proj
 
-ROOT_DIR = os.path.abspath("../../")
-sys.path.append(ROOT_DIR)
+# ROOT_DIR = os.path.abspath("../../")
+# sys.path.append(ROOT_DIR)
 
 from vsegmenter import cfg
 
 cfg.configLog()
 
 
-def simplify_polygon(shapely_polygon, simply_threshold1=1.5, simply_threshold2=3, buffer_distance=1):
+def simplify_polygon(shapely_polygon, simply_threshold1=1.5, simply_threshold2=3, buffer_distance=1,
+                     simply_threshold3=0.5):
     simplified_polygon = shapely_polygon.simplify(tolerance=simply_threshold1)
     simplified_polygon = simplified_polygon.simplify(tolerance=simply_threshold2)
     simplified_polygon = simplified_polygon.buffer(distance=buffer_distance)
+    simplified_polygon = simplified_polygon.simplify(tolerance=simply_threshold3)
     return simplified_polygon
 
 
@@ -51,6 +53,10 @@ def vectorize_predictions(raster_file, db_file, filter_value=1, feature_filter=N
     if feature_filter:
         polys = [p for p in polys if feature_filter(p)]
     logging.info(f"Polygons after filtering {len(polys)}")
+    if len(polys) == 0:
+        logging.info(f"No polygons to process, skipping")
+        return
+
     polys = geov.remove_interior_rings(polys)
 
     # create extent for current polygons
@@ -121,10 +127,12 @@ if __name__ == '__main__':
     total = len(input_images)
     for i, f_image in enumerate(input_images):
         logging.info("Vectorizing image {} of {}".format(i + 1, total))
-        vectorize_predictions(f_image, output_file, feature_filter=filter_by_area(min_area=450), db_file_srid=25830)
+        vectorize_predictions(f_image, output_file, feature_filter=filter_by_area(min_area=300), db_file_srid=25830)
 
     filtered_output_file = output_file.replace(".sqlite", "_filtered.sqlite")
     logging.info(f"Simplifying polygons into {filtered_output_file}")
     simplify_features(output_file, filtered_output_file)
 
     logging.info("Vectorized geometries successfully written.")
+
+

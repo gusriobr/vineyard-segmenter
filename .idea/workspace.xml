@@ -5,32 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95939c3f-9411-49a4-995a-901854fb064a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/dataset/propuestas_revision.sqlite" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/test_vsegmenter/dataset/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/test_vsegmenter/dataset/test_dataset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/eval/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vsegmenter/eval/run_eval.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vineyard-segmenter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vineyard-segmenter.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/eval_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/eval_model.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/dataset/samples.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/resources/dataset/samples.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/project.qgz" beforeDir="false" afterPath="$PROJECT_DIR$/resources/project.qgz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/raster/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0345_6-4_extraccion.tiff" beforeDir="false" afterPath="$PROJECT_DIR$/resources/extractions/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05__0345_6-4_0.tiff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/raster/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0373_7-2_extraction.tiff" beforeDir="false" afterPath="$PROJECT_DIR$/resources/extractions/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05__0373_7-2.tiff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/raster/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion.tiff" beforeDir="false" afterPath="$PROJECT_DIR$/resources/extractions/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05__0398_3-1_1.tiff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/raster/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0398_3-1_extraccion_B.tiff" beforeDir="false" afterPath="$PROJECT_DIR$/resources/extractions/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05__0398_3-1_0.tiff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/raster/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0425_1-1_extraction.tiff" beforeDir="false" afterPath="$PROJECT_DIR$/resources/extractions/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05__0425_1-1_1.tiff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/raster/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0425_2-1_extraccion.tiff" beforeDir="false" afterPath="$PROJECT_DIR$/resources/extractions/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05__0425_2-1_0.tiff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/cfg.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/cfg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/data/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/data/dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/data/extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/data/extraction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/data/pnoa.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/image/pnoa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/data/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/data/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/inference/run_inf.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/inference/run_inf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/model/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/model/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vsegmenter/utils/file.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/utils/file.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vsegmenter/postproc/run_post.py" beforeDir="false" afterPath="$PROJECT_DIR$/vsegmenter/postproc/run_post.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,12 +57,6 @@
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/dataset" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -207,10 +177,10 @@
     </configuration>
     <list>
       <item itemvalue="Python.run" />
-      <item itemvalue="Python.run_inf" />
       <item itemvalue="Python.run_eval" />
-      <item itemvalue="Python tests.Python tests for test_vsegmenter.dataset.test_dataset.TestDataset.test_save_samples" />
+      <item itemvalue="Python.run_inf" />
       <item itemvalue="Python tests.Python tests for test_vsegmenter.dataset.test_dataset.TestDataset.test_load_dataset" />
+      <item itemvalue="Python tests.Python tests for test_vsegmenter.dataset.test_dataset.TestDataset.test_save_samples" />
     </list>
     <recent_temporary>
       <list>
@@ -255,14 +225,9 @@
       <workItem from="1681456063455" duration="9948000" />
       <workItem from="1681482658150" duration="2866000" />
       <workItem from="1681491478344" duration="832000" />
-      <workItem from="1681536124694" duration="4865000" />
-      <workItem from="1681623959649" duration="4431000" />
-      <workItem from="1681747803114" duration="1963000" />
-      <workItem from="1681788254629" duration="20087000" />
-      <workItem from="1681810533974" duration="1858000" />
-      <workItem from="1681833457102" duration="1457000" />
-      <workItem from="1681843553600" duration="333000" />
-      <workItem from="1681964094295" duration="3278000" />
+      <workItem from="1681536124694" duration="1651000" />
+      <workItem from="1681541748804" duration="1024000" />
+      <workItem from="1681631509317" duration="661000" />
     </task>
     <servers />
   </component>
@@ -295,9 +260,39 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/vsegmenter/eval/run_eval.py</url>
-          <line>67</line>
-          <option name="timeStamp" value="182" />
+          <url>file://$PROJECT_DIR$/../../wpy/venvs/basictf/lib/python3.8/site-packages/keras/metrics.py</url>
+          <line>4077</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/vsegmenter/model/train.py</url>
+          <line>58</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/vsegmenter/data/pnoa.py</url>
+          <line>175</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test/test_vsegmenter/geo/test_vectors.py</url>
+          <line>60</line>
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test/test_vsegmenter/geo/test_vectors.py</url>
+          <line>56</line>
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/vsegmenter/postproc/run_post.py</url>
+          <line>111</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/vsegmenter/geo/proj.py</url>
+          <line>34</line>
+          <option name="timeStamp" value="126" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/vsegmenter/eval/run_eval.py</url>
