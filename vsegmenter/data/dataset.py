@@ -10,14 +10,13 @@ import tensorflow as tf
 from PIL import Image
 
 import cfg
+import geo.spatialite as spt
+import image.pnoa as pnoa
 from data.extractions import update_extraction_info
 from data.sampling import run_extraction
-import geo.spatialite as spt
 from geo.vectors import buffer_by_distance
-from image.pnoa import create_pnoa_list_by_layer
 from image.raster import clip_raster_with_polygon
 from utils.file import remake_folder, filesize_in_MB
-import image.pnoa as pnoa
 
 cfg.configLog()
 
@@ -69,6 +68,7 @@ class Dataset:
     def extract_rasters(self, samples_file):
         # for each extraction polygon, find its raster and give a unique name to the extraction .tiff file
         pnoa_index = cfg.pnoa("pnoa_index.sqlite")
+        logging.info("Updating raster info in 'extractions' layer")
         update_extraction_info(samples_file, pnoa_index)
 
         # for each extraction polygon, cut-out the pnoa tile and store the tiff in the /extractions folder
@@ -311,6 +311,24 @@ class Dataset:
         if len(parts) != 2:
             raise ValueError(f"Invalid extraction filename: {filename} expected two parts separated by '__'")
         return parts[1]
+
+    def get_sampling_info(self, sample_file):
+        """
+        Uses the extraction layer to get the pnoa tiles to sample and the number of images to extract from each tile.
+        For each extraction a tuple is returned with the sampling info as a dict and the raster file to sample
+        :param sample_file:
+        :return:
+        ({"0": 75, "1": 0, "mixed": 200}, '/absolute/path_to/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05__0345_6-4_0.tiff')
+        """
+        query = "select filename, n_samples_0, n_samples_1, n_samples_mixed from extractions"
+        results = spt.list_all(sample_file, query)
+        sampling_info = []
+        for row in results:
+            sinfo = {"0": row[1], "1": row[2], "mixed": row[3]}
+            raster_path = os.path.join(self.extraction_folder, row[0])
+            sampling_info.append((sinfo, raster_path))
+
+        return sampling_info
 
 
 def _load_dataset(dataset_file):

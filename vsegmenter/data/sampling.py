@@ -106,7 +106,8 @@ def extract_images(src_file, file_id, mask_file, dst_folder, samples_per_categor
         remake_folder(dst_folder)
 
     init_counter = 0
-    if "mixed" in samples_per_category:
+    num_polygons = samples_per_category.get("mixed", 0)
+    if num_polygons > 0:
         num_polygons = samples_per_category["mixed"]
         logging.info(f"Extracting {num_polygons} images with category representation threshold = {mixed_threshold}")
 
@@ -116,7 +117,8 @@ def extract_images(src_file, file_id, mask_file, dst_folder, samples_per_categor
         get_random_images(dst_folder, f_threshold, mask_file, file_id, init_counter, num_polygons, rect_size, src_file)
         init_counter += num_polygons
 
-    if "0" in samples_per_category:
+    num_polygons = samples_per_category.get("0", 0)
+    if num_polygons > 0:
         num_polygons = samples_per_category["0"]
         logging.info(f"Extracting {num_polygons} images for category 0")
 
@@ -131,8 +133,8 @@ def extract_images(src_file, file_id, mask_file, dst_folder, samples_per_categor
         get_random_images(dst_folder, f_category0, mask_file, file_id, init_counter, num_polygons, rect_size, src_file)
         init_counter += num_polygons
 
-    if "1" in samples_per_category:
-        num_polygons = samples_per_category["1"]
+    num_polygons = samples_per_category.get("1", 0)
+    if num_polygons > 0:
         logging.info(f"Extracting {num_polygons} images for category 1")
 
         def f_category1(mask_data):
