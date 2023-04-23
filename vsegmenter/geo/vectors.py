@@ -1,7 +1,9 @@
 import logging
 
+from pyproj import Transformer
 from shapely.geometry import MultiLineString, Polygon, MultiPoint
 from shapely.geometry import MultiPolygon
+from shapely.ops import transform as shapely_transform
 
 
 def split_multiparts(geometries):
@@ -78,4 +80,11 @@ def get_extent(shapely_geometries):
     return Polygon([(min_x, min_y), (min_x, max_y), (max_x, max_y), (max_x, min_y), (min_x, min_y)])
 
 
+def buffer_by_distance(shapely_geometry, csr, distance, dest=25830):
+    to_projected_trans = Transformer.from_crs(csr, dest, always_xy=True)
+    to_origin_trans = Transformer.from_crs(dest, csr, always_xy=True)
 
+    shapely_geometry = shapely_transform(to_projected_trans.transform, shapely_geometry)
+    shapely_geometry = shapely_geometry.buffer(distance)
+    shapely_geometry = shapely_transform(to_origin_trans.transform, shapely_geometry)
+    return shapely_geometry

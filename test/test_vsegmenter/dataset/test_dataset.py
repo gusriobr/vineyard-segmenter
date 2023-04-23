@@ -26,13 +26,16 @@ class TestDataset(unittest.TestCase):
         shutil.copy(extraction_sample, extraction_folder)
         sample_file = cfg.resources('dataset/samples.sqlite')
         return sample_file
+    def test_cut(self):
+        self.dts.extract_rasters()
+
 
     def test_extract_samples(self):
         # prepare
         sample_file = self._prepare_dts_data()
 
         # act
-        self.dts.extract_samples(sample_file)
+        self.dts.sample_images(sample_file)
 
         # assert
         mask_folder = self.dts.masks_folder
@@ -46,7 +49,7 @@ class TestDataset(unittest.TestCase):
     def test_save_samples(self):
         # prepare
         sample_file = self._prepare_dts_data()
-        self.dts.extract_samples(sample_file)
+        self.dts.sample_images(sample_file)
 
         # act
         self.dts.save_samples()
@@ -57,7 +60,7 @@ class TestDataset(unittest.TestCase):
     def test_load_dataset(self):
         # prepare
         sample_file = self._prepare_dts_data()
-        self.dts.extract_samples(sample_file)
+        self.dts.sample_images(sample_file)
         self.dts.save_samples()
 
         # act

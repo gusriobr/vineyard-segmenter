@@ -1,8 +1,15 @@
 import numpy as np
 import rasterio
 from affine import Affine
-from rasterio.warp import reproject, Resampling
-from rasterio.windows import Window
+from pyproj import Transformer
+from rasterio.warp import Resampling
+from rasterio.warp import reproject
+from shapely.geometry import Polygon
+from shapely.ops import transform as shapely_transform
+
+import rasterio
+from rasterio.mask import mask
+from shapely.geometry import mapping
 
 
 def _write_raster(img, img_filename, meta):
@@ -48,3 +55,54 @@ def georeference_image(img, img_source, img_filename, scale=1, bands=3, reprojec
                       dst_transform=dest_transform, dst_crs=meta['crs'], resampling=Resampling.nearest,
                       dst_shape=dest_shape)
             _write_raster(dest_img, img_filename, meta)
+
+
+def get_raster_bbox(raster_file):
+    with rasterio.open(raster_file) as src:
+        crs = src.crs.to_epsg()
+        left, bottom, right, top = src.bounds
+        return Polygon.from_bounds(left, bottom, right, top), crs
+
+
+def clip_raster_with_polygon(shapely_geometry, geometry_crs, raster_path, output_path):
+    """
+    Clips a raster with a Shapely geometry and saves the resulting image to a file.
+
+    :param shapely_geometry: The geometry to clip the raster with.
+    :type shapely_geometry: shapely.geometry
+
+    :param raster_path: The path to the input raster file.
+    :type raster_path: str
+
+    :param output_path: The path to save the output raster file, including the .tiff extension.
+    :type output_path: str
+
+    :return: None
+    """
+    # Open the raster file using Rasterio
+    with rasterio.open(raster_path) as src:
+
+        # project shapely polygon to raster csr if needed
+        if src.crs.to_epsg() != geometry_crs:
+            transformer = Transformer.from_crs(geometry_crs, src.crs.to_epsg(), always_xy=True)
+            shapely_geometry = shapely_transform(transformer.transform, shapely_geometry)
+
+        # Convert the Shapely geometry to a GeoJSON-like dict using Shapely's `mapping()` function
+        geojson = mapping(shapely_geometry)
+
+        # Use Rasterio's `mask()` function to clip the raster with the Shapely geometry
+        out_image, out_transform = mask(src, [geojson], crop=True)
+
+        # Copy the metadata from the original raster
+        out_meta = src.meta.copy()
+
+        # Update the metadata with new dimensions, transform, and CRS
+        out_meta.update({"driver": "GTiff",
+                         "height": out_image.shape[1],
+                         "width": out_image.shape[2],
+                         "transform": out_transform,
+                         "crs": src.crs})
+
+        # Write the clipped raster to a new file using Rasterio's `write()` function
+        with rasterio.open(output_path, "w", **out_meta) as dest:
+            dest.write(out_image)

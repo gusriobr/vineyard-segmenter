@@ -10,8 +10,14 @@ import tensorflow as tf
 from PIL import Image
 
 import cfg
-from data.extraction import run_extraction
+from data.extractions import update_extraction_info
+from data.sampling import run_extraction
+import geo.spatialite as spt
+from geo.vectors import buffer_by_distance
+from image.pnoa import create_pnoa_list_by_layer
+from image.raster import clip_raster_with_polygon
 from utils.file import remake_folder, filesize_in_MB
+import image.pnoa as pnoa
 
 cfg.configLog()
 
@@ -60,7 +66,27 @@ class Dataset:
         self.train_ratio = train_ratio
         self.info = {}
 
-    def extract_samples(self, samples_file, extraction_rasters=None, sample_size=256, remake_folders=False):
+    def extract_rasters(self, samples_file):
+        # for each extraction polygon, find its raster and give a unique name to the extraction .tiff file
+        pnoa_index = cfg.pnoa("pnoa_index.sqlite")
+        update_extraction_info(samples_file, pnoa_index)
+
+        # for each extraction polygon, cut-out the pnoa tile and store the tiff in the /extractions folder
+        # def row_mapper:
+        #     return {"pnoa_file": }
+        extr_polys = spt.list_features(samples_file, "extractions", "geometry")
+        csr = spt.get_srid(samples_file, "extractions", "geometry")
+        for poly in extr_polys:
+            raster_file = pnoa.pnoa_storage_path(poly["pnoa_tile"], cfg.PNOA_BASE_FOLDER)
+            output_file = os.path.join(self.extraction_folder, poly["filename"])
+            logging.info(f"Clipping PNOA tile {poly['pnoa_tile']} into file {output_file}")
+            extraction_rect = poly["geometry"]
+            # create 10m buffer
+            extraction_rect = buffer_by_distance(extraction_rect, csr, 5)
+            clip_raster_with_polygon(extraction_rect, csr, raster_file, output_file)
+        logging.info("Extraction tiff successfully created!")
+
+    def sample_images(self, samples_file, extraction_rasters=None, sample_size=256, remake_folders=False):
         """
         Extracts images and mas
         :param samples_file: spatialite file containing feature samples
@@ -243,7 +269,7 @@ class Dataset:
                         "extraction": extraction_id,
                         "x": ext_found[1],
                         "y": ext_found[2]}
-            )
+                       )
         return lst
 
     def create_extractions_info(self):

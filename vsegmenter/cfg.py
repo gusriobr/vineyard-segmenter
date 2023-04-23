@@ -29,6 +29,8 @@ def pnoa(filename):
     pnoa_base = os.environ.get('PNOA_BASE_FOLDER', default=PNOA_BASE_FOLDER)
     return os.path.join(pnoa_base, filename)
 
+def test_resource(filename):
+    return os.path.join(PROJECT_BASE, "test/resources", filename)
 
 PROJECT_BASE = Path(os.path.dirname(os.path.abspath(__file__))).parent.absolute()
 # '/media/cartografia/01_Ortofotografia/2020/RGB'

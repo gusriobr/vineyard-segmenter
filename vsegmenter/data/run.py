@@ -20,7 +20,7 @@ if __name__ == '__main__':
     version = "v5"
     dts_folder = cfg.dataset(f'{version}')
 
-    do_extraction = False
+    do_extraction = True
     do_create_dts = True
     dts = Dataset(dts_folder, img_size=128)
 
@@ -28,6 +28,7 @@ if __name__ == '__main__':
 
     if do_extraction:
         sample_size = 256
+
         raster_base_folder = dts_folder + "/extractions"
         raster_samples = [
             # custom sample number
@@ -52,7 +53,9 @@ if __name__ == '__main__':
              os.path.join(raster_base_folder, 'PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05__0425_2-1_0.tiff')],
         ]
         sample_file = cfg.resources('dataset/samples.sqlite')
-        dts.extract_samples(sample_file, raster_samples, sample_size=sample_size)
+        dts.extract_rasters(sample_file)
+        exit(0)
+        dts.sample_images(sample_file, raster_samples, sample_size=sample_size)
 
     if do_create_dts:
         dts.save_samples()

@@ -13,7 +13,7 @@ from tqdm import tqdm
 import cfg
 import logging
 
-from geo.spatialite import create_connection, create_spatialite_table
+from geo.spatialite import create_connection, create_spatialite_table, intersect_layers
 
 cfg.configLog()
 
@@ -153,6 +153,18 @@ def create_pnoa_list_for_municipalities(index_file, muni_list):
         tile_list.extend([r[0] for r in cursor.fetchall()])
     return tile_list
 
+def create_pnoa_list_by_layer(index_file, db_file, layer_name, geometry_column):
+    """
+    Returns the list of pnoa tiles that intersect with the features of the given layer
+    :param db_file: location of layer
+    :param layer_name: intersecting layer
+    :param geometry_column: table column name that stores the geometry
+    :return:
+    """
+    pnoa_tiles = intersect_layers(index_file, 'pnoa_tiles', 'geom',
+                                      db_file, layer_name, geometry_column)
+    return  set([p[1] for p in pnoa_tiles])  # keep filename
+
 
 def get_do_geomety_by_name(do_name, srid=None):
     """
@@ -170,6 +182,21 @@ def get_do_geomety_by_name(do_name, srid=None):
 
 ITACYL_PNOA_BASE = "http://ftp.itacyl.es/cartografia/01_Ortofotografia/{year}/RGB/H50_{tile_id}/{img_file}"
 
+
+
+
+def pnoa_storage_path(filename, dest_folder):
+    """
+    Gives the final storage path of the given name using dest_folder as reference
+    :param filename:
+    :param dest_folder:
+    :return:
+    """
+    parts = filename.split("_")
+    tile_id = parts[9]
+    return os.path.join(dest_folder, f"H50_{tile_id}/{filename}")
+
+
 def download_pnoa_tile(filename, dest_folder):
     """
     :param filename: PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05_0376_3-5.tif
@@ -179,7 +206,7 @@ def download_pnoa_tile(filename, dest_folder):
     tile_id = parts[9]
     year = parts[2]
     url = ITACYL_PNOA_BASE.format(img_file=filename, year=year, tile_id=tile_id)
-    output_file = os.path.join(dest_folder, f"H50_{tile_id}/{filename}")
+    output_file = pnoa_storage_path(filename, dest_folder)
     if not os.path.exists(output_file):
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
     print(f"Downloading raster file: {filename}")
@@ -225,6 +252,10 @@ if __name__ == '__main__':
     #     with open(cfg.resources(f"pnoa_{do_name}.txt"), 'w') as f:
     #         for filename in raster_files:
     #             f.write(f"{filename}\n")
+
+    ########################
+    #
+    ########################
 
     ########################
     # descarga de imágenes pnoa
