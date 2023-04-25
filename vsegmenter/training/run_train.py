@@ -1,20 +1,13 @@
-import json
+import logging
 import os
 from datetime import datetime
 
 # os.environ["LD_LIBRARY_PATH"] = "/usr/local/cuda/lib64"
-import tensorflow as tf
 import unet
 from tensorflow import keras
 
-from unet import custom_objects
-from tensorflow.python.keras import backend as K
-from unet.schedulers import SchedulerType
-from data.dataset import create_tf_datasets, get_datasets
+from data.dataset import get_datasets
 from vsegmenter import cfg
-from vsegmenter.data import dataset
-
-import logging
 
 cfg.configLog()
 
