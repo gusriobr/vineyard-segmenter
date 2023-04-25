@@ -6,22 +6,29 @@ from datetime import datetime
 import unet
 from tensorflow import keras
 
-from data.dataset import get_datasets
+from data.dataset import Dataset, create_tf_datasets
 from vsegmenter import cfg
 
 cfg.configLog()
 
-
 if __name__ == '__main__':
-    train_dataset, validation_dataset = get_datasets(version="v4")
-
-    version = "v4"
+    version = "v5"
     label = "unet"
+    img_size = 128
+
+    dataset_file = cfg.dataset(f'{version}/dataset_{img_size}.pickle')
+    x_train, y_train, x_test, y_test = Dataset.load_from_file(dataset_file)
+    logging.info(f"Number of train samples: {len(x_train)}, test samples = {len(x_test)}")
+    logging.info(f"Sample dimensions: sample: {x_train[0].shape} label (mask): {y_train[0].shape}")
+    logging.info("Original image shape : {}".format(x_train.shape))
+
+    train_dataset, validation_dataset = create_tf_datasets(x_train, y_train, x_test, y_test, batch_size=None)
+
     model_file = cfg.results(f"{label}_{version}.model")
     history_file = cfg.results(f"{label}_{version}_history.json")
     log_dir_path = cfg.results(f'tmp/{label}/{datetime.now().strftime("%Y-%m-%dT%H-%M_%S")}')
 
-    prev_model = cfg.results(f"unet_v3_a.model")
+    prev_model = None  # prev_model = cfg.results(f"unet_v3_a.model")
     logging.info(f"model_file = {model_file}")
     logging.info(f"history_file = {history_file}")
     logging.info(f"log_dir_path = {log_dir_path}")
@@ -39,8 +46,6 @@ if __name__ == '__main__':
         unet_model.load_weights(weights_file)
 
     unet.finalize_model(unet_model,
-                        # loss=losses.SparseCategoricalCrossentropy(from_logits=True),
-                        # metrics=[metrics.SparseCategoricalAccuracy()],
                         dice_coefficient=False,
                         auc=False)
 
@@ -57,9 +62,3 @@ if __name__ == '__main__':
     EPOCHS = 200
     LEARNING_RATE = 1e-3
     history = trainer.fit(unet_model, train_dataset, validation_dataset, epochs=EPOCHS, batch_size=32)
-
-    # unet_model.save(model_file)
-    # unet_model.save_weights(model_file + ".h5")
-
-    # with open(history_file, 'w') as f:
-    #     json.dump(history.history, f)
