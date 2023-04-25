@@ -12,10 +12,14 @@ import spatialite
 from PIL import Image
 from rasterio import features
 from rasterio.features import geometry_mask
+from shapely.geometry import box
+from shapely.ops import transform
+from shapely.affinity import rotate
 
 # Must used recent master (pypi version appears broken as of 8/18/2014)
 # pip install "git+https://github.com/lokkju/pyspatialite.git@94a4522e58#pyspatialite"
 import cfg
+from image.raster import read_rasterio_image
 from utils.file import remake_folder
 
 cfg.configLog()
@@ -87,9 +91,14 @@ def burn_samples(samples_file, input_file, output_file):
             dst.write(data, 1)
 
 
+def get_num_autosampling(width, height, rect_size):
+    cols = width // rect_size[0]
+    rows = height // rect_size[1]
+    return cols * rows + (cols - 1) * (rows - 1)
+
+
 def extract_images(src_file, file_id, mask_file, dst_folder, samples_per_category, rect_size=(256, 256),
-                   delete_folder=True,
-                   mixed_threshold=0.3):
+                   delete_folder=True, mixed_threshold=0.3, auto_mixed=True):
     """
     :param src_file:
     :param mask_file:
@@ -105,21 +114,17 @@ def extract_images(src_file, file_id, mask_file, dst_folder, samples_per_categor
     if delete_folder:
         remake_folder(dst_folder)
 
+    src_image = read_rasterio_image(src_file)
+    mask_image = read_rasterio_image(mask_file)
+    height = src_image.height
+    width = src_image.width
+    if rect_size[0] > width or rect_size[1] > height:
+        raise ValueError(
+            f"Invalid extraction size. Minimum expected size: {rect_size} got: {(width, height)} in file {src_file}")
+
     init_counter = 0
-    num_polygons = samples_per_category.get("mixed", 0)
-    if num_polygons > 0:
-        num_polygons = samples_per_category["mixed"]
-        logging.info(f"Extracting {num_polygons} images with category representation threshold = {mixed_threshold}")
-
-        def f_threshold(mask_data):
-            return check_categories(mask_data, zero_threshold=mixed_threshold, one_threshold=mixed_threshold)
-
-        get_random_images(dst_folder, f_threshold, mask_file, file_id, init_counter, num_polygons, rect_size, src_file)
-        init_counter += num_polygons
-
     num_polygons = samples_per_category.get("0", 0)
     if num_polygons > 0:
-        num_polygons = samples_per_category["0"]
         logging.info(f"Extracting {num_polygons} images for category 0")
 
         def f_category0(mask_data):
@@ -130,7 +135,8 @@ def extract_images(src_file, file_id, mask_file, dst_folder, samples_per_categor
             """
             return check_categories(mask_data, zero_threshold=1)
 
-        get_random_images(dst_folder, f_category0, mask_file, file_id, init_counter, num_polygons, rect_size, src_file)
+        get_random_samples(dst_folder, f_category0, src_image, mask_image, file_id, init_counter, num_polygons,
+                           rect_size)
         init_counter += num_polygons
 
     num_polygons = samples_per_category.get("1", 0)
@@ -145,13 +151,33 @@ def extract_images(src_file, file_id, mask_file, dst_folder, samples_per_categor
             """
             return check_categories(mask_data, one_threshold=1)
 
-        get_random_images(dst_folder, f_category1, mask_file, file_id, init_counter, num_polygons, rect_size, src_file)
+        get_random_samples(dst_folder, f_category1, src_image, mask_image, file_id, init_counter, num_polygons,
+                           rect_size)
         init_counter += num_polygons
+
+    num_polygons = samples_per_category.get("mixed", 0)
+    if num_polygons > 0:
+        if auto_mixed:
+            num_polygons = get_num_autosampling(width, height, rect_size)
+        logging.info(f"Extracting {num_polygons} images with category representation threshold = {mixed_threshold}")
+
+        def f_threshold(mask_data):
+            return check_categories(mask_data, zero_threshold=mixed_threshold, one_threshold=mixed_threshold)
+
+        get_random_samples(dst_folder, f_threshold, src_image, mask_image, file_id, init_counter, num_polygons,
+                           rect_size)
+        init_counter += num_polygons
+
     logging.info(f"Extracted {init_counter} images")
 
 
-def get_random_images(dst_folder, image_filter, mask_file, prefix, init_counter, num_polygons, rect_size, src_file,
-                      max_iterations=100_00):
+def create_rotated_rectangle(x, y, width, height, angle):
+    rectangle = box(x, y, x + width, y + height)
+    return rotate(rectangle, angle, origin=(x + width / 2, y + height / 2))
+
+
+def get_random_images2(dst_folder, image_filter, mask_file, prefix, init_counter, num_polygons, rect_size, src_file,
+                       max_iterations=100_00):
     """
     Get ramdon images from dastaset folder
     :param dst_folder:
@@ -198,6 +224,64 @@ def get_random_images(dst_folder, image_filter, mask_file, prefix, init_counter,
         image.save(f"{dst_folder}/{prefix}_{init_counter + i}_data.jpg")
         img_mask = Image.fromarray(mask_data)
         img_mask.save(f"{dst_folder}/{prefix}_{init_counter + i}_mask.jpg")
+        i += 1
+
+
+def get_random_samples(dst_folder, image_filter, original_src, original_mask, prefix, init_counter, num_polygons,
+                       rect_size,
+                       max_iterations=10_000, rotate=True, rotate_freq=0.5):
+    """
+    Get ramdon images from dastaset folder
+    :param dst_folder:
+    :param image_filter:
+    :param mask_file:
+    :param num_polygons:
+    :param rect_size:
+    :param src_file:
+    :return:
+    """
+
+    # Iterar sobre el número de rectángulos
+    i = 0
+    num_iterations = 0
+    fill_color = 125
+    while i < num_polygons:
+        if rotate and random.random() <= rotate_freq:
+            angle = random.randint(0, 360)
+            src = original_src.rotate(angle=angle)
+            mask = original_mask.rotate(angle=angle, fillcolor=fill_color)
+            has_rotated = True
+        else:
+            src = original_src
+            mask = original_mask
+            has_rotated = False
+
+        height = src.height
+        width = src.width
+
+        # Seleccionar una ubicación aleatoria para el rectángulo
+        x = random.randint(0, width - rect_size[0])
+        y = random.randint(0, height - rect_size[1])
+
+        # read mask data and check at least each category is represented by a % of pixes
+        image_rect = src.crop((x, y, x + rect_size[0], y + rect_size[1]))
+        mask_rect = mask.crop((x, y, x + rect_size[0], y + rect_size[1]))
+
+        num_iterations += 1
+        if num_iterations > max_iterations:
+            raise ValueError(
+                f"Couldn't extract enough images after {max_iterations} iterations found {i}. Check the image mask: {mask_file}")
+        mask_array = np.array(mask_rect)
+        if has_rotated and np.count_nonzero(mask_array[mask_array == fill_color]) > 0:
+            # when the image has rotated some of the info is lost, this portions of the image
+            # are mark as "fill-color". Make sure non of these pixels is used as sample
+            continue
+        if not image_filter(mask_array):
+            continue
+
+        # save images
+        image_rect.save(f"{dst_folder}/{prefix}_{init_counter + i}_data.jpg")
+        mask_rect.save(f"{dst_folder}/{prefix}_{init_counter + i}_mask.jpg")
         i += 1
 
 

@@ -1,15 +1,14 @@
 import numpy as np
 import rasterio
+from PIL import Image
 from affine import Affine
 from pyproj import Transformer
+from rasterio.mask import mask
 from rasterio.warp import Resampling
 from rasterio.warp import reproject
 from shapely.geometry import Polygon
-from shapely.ops import transform as shapely_transform
-
-import rasterio
-from rasterio.mask import mask
 from shapely.geometry import mapping
+from shapely.ops import transform as shapely_transform
 
 
 def _write_raster(img, img_filename, meta):
@@ -18,6 +17,19 @@ def _write_raster(img, img_filename, meta):
             # iterate over channels and write bands
             img_channel = img[:, :, ch]
             dst.write(img_channel, ch + 1)  # rasterio bands are 1-indexed
+
+
+def read_rasterio_image(filename):
+    with rasterio.open(filename) as src:
+        # Lee los datos de la imagen como una matriz numpy
+        data = src.read()
+        # Transpone la matriz para que tenga la forma (bandas, filas, columnas)
+        data = np.transpose(data, (1, 2, 0))
+        # Crea una imagen PIL a partir de la matriz de datos
+        if data.shape[2] == 1:
+            data = data.squeeze()
+        pil_image = Image.fromarray(data)
+        return pil_image
 
 
 def georeference_image(img, img_source, img_filename, scale=1, bands=3, reproject_raster=False):
@@ -81,14 +93,15 @@ def clip_raster_with_polygon(shapely_geometry, geometry_crs, raster_path, output
     """
     # Open the raster file using Rasterio
     with rasterio.open(raster_path) as src:
-
         # project shapely polygon to raster csr if needed
         if src.crs.to_epsg() != geometry_crs:
             transformer = Transformer.from_crs(geometry_crs, src.crs.to_epsg(), always_xy=True)
             shapely_geometry = shapely_transform(transformer.transform, shapely_geometry)
+            min_x, min_y, max_x, max_y = shapely_geometry.bounds
+            rect = Polygon([(min_x, min_y), (min_x, max_y), (max_x, max_y), (max_x, min_y)])
 
         # Convert the Shapely geometry to a GeoJSON-like dict using Shapely's `mapping()` function
-        geojson = mapping(shapely_geometry)
+        geojson = mapping(rect)
 
         # Use Rasterio's `mask()` function to clip the raster with the Shapely geometry
         out_image, out_transform = mask(src, [geojson], crop=True)

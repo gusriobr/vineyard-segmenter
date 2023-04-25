@@ -82,7 +82,7 @@ class Dataset:
             logging.info(f"Clipping PNOA tile {poly['pnoa_tile']} into file {output_file}")
             extraction_rect = poly["geometry"]
             # create 10m buffer
-            extraction_rect = buffer_by_distance(extraction_rect, csr, 5)
+            # extraction_rect = buffer_by_distance(extraction_rect, csr, 5)
             clip_raster_with_polygon(extraction_rect, csr, raster_file, output_file)
         logging.info("Extraction tiff successfully created!")
 
