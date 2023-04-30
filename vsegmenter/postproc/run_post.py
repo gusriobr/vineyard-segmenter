@@ -1,6 +1,7 @@
 """
 Post processing to create feature file out from raster images
 """
+import argparse
 import logging
 import os
 import sys
@@ -33,7 +34,7 @@ def simplify_polygon(shapely_polygon, simply_threshold1=1.5, simply_threshold2=3
 
 
 def vectorize_predictions(raster_file, db_file, filter_value=1, feature_filter=None, db_file_srid=4258):
-    logging.info("Started image vectorization from raster {} into shapefile {}".format(raster_file, db_file))
+    logging.info("Started image vectorization from raster {} into Spatialite {}".format(raster_file, db_file))
 
     with rasterio.open(raster_file) as src:
         img = src.read()
@@ -65,9 +66,10 @@ def vectorize_predictions(raster_file, db_file, filter_value=1, feature_filter=N
     layer_name = VINEYARD_LAYER["name"]
     geometry_column = "geom"
     if not os.path.exists(db_file):
-        spt.create_spatialite_table(db_file, layer_name, VINEYARD_LAYER["sql"], geomtry_col=geometry_column,
+        spt.create_spatialite_table(db_file, layer_name, VINEYARD_LAYER["sql"], geometry_col=geometry_column,
                                     srid=db_file_srid)
-    # find polygons stores in the same area as current polygons
+    # find polygons stored in the same area as current polygons
+    logging.info(f"Retrieving exising polygons in {db_file}")
     polys_found = spt.list_by_geometry(db_file, layer_name, geometry_column, poly_ext, db_file_srid)
 
     # merge all polygons
@@ -86,6 +88,7 @@ def vectorize_predictions(raster_file, db_file, filter_value=1, feature_filter=N
 
 
 VINEYARD_LAYER = {"name": "vineyard",
+                  "geometry_column": "geom",
                   "sql": """
         CREATE TABLE IF NOT EXISTS vineyard (
             id INTEGER PRIMARY KEY
@@ -116,13 +119,16 @@ def simplify_features(input_file, output_file):
 if __name__ == '__main__':
 
     ### test filtering
+    parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
+    parser.add_argument("version", type=int, help="Model version")
+    args = parser.parse_args()
 
-    iteration = 4
+    version = args.version
 
-    input_folder = cfg.results(f"processed/v{iteration}")
+    input_folder = cfg.results(f"processed/v{version}")
     input_images = [os.path.join(input_folder, f_img) for f_img in os.listdir(input_folder) if f_img.endswith(".tif")]
     # output_file = cfg.results(f"processed/v{iteration}/polygons_v{iteration}.shp")
-    output_file = cfg.results(f"processed/v{iteration}/polygons_v{iteration}.sqlite")
+    output_file = cfg.results(f"processed/v{version}/polygons_v{version}.sqlite")
 
     total = len(input_images)
     for i, f_image in enumerate(input_images):

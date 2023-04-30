@@ -101,7 +101,7 @@ def create_pnoa_index(raster_dir, output_path, muni_file):
     # Cargar los municipios
     municipalities_gdf = gpd.read_file(muni_file)
 
-    create_spatialite_table(output_path, TABLE_PNOA_TILES["name"], TABLE_PNOA_TILES["sql"], geomtry_col="geom",
+    create_spatialite_table(output_path, TABLE_PNOA_TILES["name"], TABLE_PNOA_TILES["sql"], geometry_col="geom",
                             srid=4326)
 
     raster_files = locate_raster_files(raster_dir)

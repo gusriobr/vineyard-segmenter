@@ -10,7 +10,7 @@ raster_folder = '/media/gus/data/viticola/datasets/segmenter/v5/extractions'
 EXTRACTIONS_SRID = 4258
 create_table_query = "CREATE TABLE extractions (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT)"
 create_spatialite_table(dataset_file, table_name="extractions", table_features_sql=create_table_query,
-                        geomtry_col="geometry", drop_if_exists=True, srid=EXTRACTIONS_SRID)
+                        geometry_col="geometry", drop_if_exists=True, srid=EXTRACTIONS_SRID)
 
 with create_connection(dataset_file) as conn:
     for filename in os.listdir(raster_folder):
