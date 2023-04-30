@@ -193,7 +193,7 @@ class Dataset:
         return x_train, y_train, x_test, y_test
 
     @staticmethod
-    def load_from_file(dts_file):
+    def load_from_file(dts_file, max_samples=None):
         """
         Creates dataset object and return
         :param directory:
@@ -204,6 +204,11 @@ class Dataset:
         train_dts, test_dts = dts_object["train"], dts_object["test"]
         x_train, y_train = train_dts
         x_test, y_test = test_dts
+        if max_samples is not None:
+            x_train = x_train[0:max_samples, :]
+            x_test = x_test[0:max_samples, :]
+            y_train = y_train[0:max_samples, :]
+            y_test = y_test[0:max_samples, :]
 
         logging.info(f"Number of train samples: {len(x_train)}, test samples = {len(x_test)}")
         logging.info(f"Sample dimensions: sample: {x_train[0].shape} label (mask): {y_train[0].shape}")
@@ -518,7 +523,7 @@ def split_indexes(dataset, train_ratio=0.6, test_ratio=0.2, validation_split=Fal
         return train_indices, test_indices
 
 
-def create_tf_datasets(x_train, y_train, x_test, y_test, batch_size=64, shuffle=False):
+def create_tf_datasets(x_train, y_train, x_test, y_test, batch_size=64, shuffle=True):
     logging.info("Creating TF datasets from arrays")
     train_dts = tf.data.Dataset.from_tensor_slices((x_train, y_train))
     test_dts = tf.data.Dataset.from_tensor_slices((x_test, y_test))
