@@ -22,14 +22,17 @@ if __name__ == '__main__':
 
     do_extraction = True
     do_create_dts = True
+    do_sampling = True
     dts = Dataset(dts_folder, img_size=128)
 
-    if do_extraction:
-        sample_size = 256
+    sample_size = 256
+    sample_file = cfg.resources('dataset/samples.sqlite')
+    raster_base_folder = dts_folder + "/extractions"
 
-        raster_base_folder = dts_folder + "/extractions"
-        sample_file = cfg.resources('dataset/samples.sqlite')
+    if do_extraction:
         dts.extract_rasters(sample_file)
+
+    if do_sampling:
         sampling_info = dts.get_sampling_info(sample_file)
         dts.sample_images(sample_file, sampling_info, sample_size=sample_size)
 
