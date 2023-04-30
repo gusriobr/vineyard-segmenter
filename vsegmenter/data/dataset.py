@@ -11,11 +11,11 @@ from PIL import Image
 
 import cfg
 import geo.spatialite as spt
-import image.pnoa as pnoa
+import vsegmenter.image.pnoa as pnoa
 from data.extractions import update_extraction_info
 from data.sampling import run_extraction
 from geo.vectors import buffer_by_distance
-from image.raster import clip_raster_with_polygon
+from vsegmenter.image.raster import clip_raster_with_polygon
 from utils.file import remake_folder, filesize_in_MB
 
 cfg.configLog()
@@ -55,6 +55,8 @@ class Dataset:
     """
 
     def __init__(self, dts_folder, img_size=128, train_ratio=0.8):
+        if not os.path.exists(dts_folder):
+            raise ValueError(f"Invalid dataset folder, directory doesn't exists {dts_folder}")
         self.img_size = img_size
         self.dts_folder = dts_folder
         self.dataset_file = f'{dts_folder}/dataset_{img_size}.pickle'
@@ -63,6 +65,7 @@ class Dataset:
         self.samples_folder = f'{dts_folder}/samples'
         self.masks_folder = f'{dts_folder}/masks'
         self.train_ratio = train_ratio
+
         self.info = {}
 
     def extract_rasters(self, samples_file):

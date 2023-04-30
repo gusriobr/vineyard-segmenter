@@ -17,14 +17,12 @@ def prepare_folders(dts_folder):
 
 if __name__ == '__main__':
 
-    version = "v5"
+    version = "v6"
     dts_folder = cfg.dataset(f'{version}')
 
     do_extraction = True
     do_create_dts = True
     dts = Dataset(dts_folder, img_size=128)
-
-    NUM_SAMPLES_PER_RASTER = {"0": 75, "1": 25, "mixed": 300}
 
     if do_extraction:
         sample_size = 256

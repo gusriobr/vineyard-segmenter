@@ -19,7 +19,7 @@ from shapely.affinity import rotate
 # Must used recent master (pypi version appears broken as of 8/18/2014)
 # pip install "git+https://github.com/lokkju/pyspatialite.git@94a4522e58#pyspatialite"
 import cfg
-from image.raster import read_rasterio_image
+from vsegmenter.image.raster import read_rasterio_image
 from utils.file import remake_folder
 
 cfg.configLog()
