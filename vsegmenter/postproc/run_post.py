@@ -4,22 +4,20 @@ Post processing to create feature file out from raster images
 import argparse
 import logging
 import os
-import sys
 
 import fiona
 import rasterio
 from rasterio import features
-from shapely.geometry import shape
-from shapely.geometry import Polygon
 from shapely.geometry import mapping
+from shapely.geometry import shape
+
 import geo.spatialite as spt
 import geo.vectors as geov
 from geo import proj
+from vsegmenter import cfg
 
 # ROOT_DIR = os.path.abspath("../../")
 # sys.path.append(ROOT_DIR)
-
-from vsegmenter import cfg
 
 cfg.configLog()
 
