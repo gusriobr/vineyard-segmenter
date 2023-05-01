@@ -68,16 +68,22 @@ class Dataset:
 
         self.info = {}
 
-    def extract_rasters(self, samples_file):
-        # for each extraction polygon, find its raster and give a unique name to the extraction .tiff file
+    def update_extraction_info(self, samples_file):
+        """
+        for each extraction polygon, find its raster and give a unique name to the extraction .tiff file
+        :param samples_file:
+        :return:
+        """
         pnoa_index = cfg.pnoa("pnoa_index.sqlite")
         logging.info("Updating raster info in 'extractions' layer")
         update_extraction_info(samples_file, pnoa_index)
 
+    def extract_rasters(self, samples_file, ext_filter=None):
         # for each extraction polygon, cut-out the pnoa tile and store the tiff in the /extractions folder
-        # def row_mapper:
-        #     return {"pnoa_file": }
         extr_polys = spt.list_features(samples_file, "extractions", "geometry")
+        if ext_filter:
+            # filter extracdtion  polygons
+            extr_polys = [p for p in extr_polys if ext_filter in p["pnoa_tile"]]
         csr = spt.get_srid(samples_file, "extractions", "geometry")
         for poly in extr_polys:
             raster_file = pnoa.pnoa_storage_path(poly["pnoa_tile"], cfg.PNOA_BASE_FOLDER)
@@ -86,14 +92,14 @@ class Dataset:
             extraction_rect = poly["geometry"]
             # create 10m buffer
             # extraction_rect = buffer_by_distance(extraction_rect, csr, 5)
-            clip_raster_with_polygon(extraction_rect, csr, raster_file, output_file)
+            clip_raster_with_polygon(extraction_rect, csr, raster_file, output_file, output_srid=25830)
         logging.info("Extraction tiff successfully created!")
 
-    def sample_images(self, samples_file, extraction_rasters=None, sample_size=256, remake_folders=False):
+    def sample_images(self, samples_file, sampling_info=None, sample_size=256, remake_folders=False):
         """
         Extracts images and mas
         :param samples_file: spatialite file containing feature samples
-        :param extraction_rasters:
+        :param sampling_info:
         :return:
         """
         if not os.path.exists(self.extraction_folder):
@@ -102,21 +108,21 @@ class Dataset:
                 .tiff raster files to extract sample images.""")
 
         self.__prepare_folders()
-        if not extraction_rasters:
+        if not sampling_info:
             # list all extractions from dataset folder
-            extraction_rasters = self.get_extration_files()
-            if not extraction_rasters:
+            sampling_info = self.get_extration_files()
+            if not sampling_info:
                 raise ValueError(f"Extraction folder {self.extraction_folder} is empty")
             # set number of samples to extract for each raster
             NUM_SAMPLES_PER_RASTER = {"0": 75, "1": 25, "mixed": 300}
-            extraction_rasters = [
-                [self.get_extraction_id_for_raster(file), NUM_SAMPLES_PER_RASTER, file] for file in extraction_rasters
+            sampling_info = [
+                [self.get_extraction_id_for_raster(file), NUM_SAMPLES_PER_RASTER, file] for file in sampling_info
             ]
         else:
             # check extraction files exists and add extraction id from file
             trf_extraction = []
             not_found = []
-            for num_samples, filepath in extraction_rasters:
+            for num_samples, filepath in sampling_info:
                 if not os.path.exists(filepath):
                     not_found.append(filepath)
                 else:
@@ -125,9 +131,9 @@ class Dataset:
                     )
             if not_found:
                 raise ValueError(f"These raster files don't exists: {not_found}")
-            extraction_rasters = trf_extraction
+            sampling_info = trf_extraction
 
-        run_extraction(extraction_rasters, samples_file, self.dts_folder, (sample_size, sample_size),
+        run_extraction(sampling_info, samples_file, self.dts_folder, (sample_size, sample_size),
                        remake_folders=remake_folders)
 
     def get_extration_files(self):
@@ -320,7 +326,7 @@ class Dataset:
             raise ValueError(f"Invalid extraction filename: {filename} expected two parts separated by '__'")
         return parts[1]
 
-    def get_sampling_info(self, sample_file):
+    def get_sampling_info(self, sample_file, ext_filter=None):
         """
         Uses the extraction layer to get the pnoa tiles to sample and the number of images to extract from each tile.
         For each extraction a tuple is returned with the sampling info as a dict and the raster file to sample
@@ -328,13 +334,14 @@ class Dataset:
         :return:
         ({"0": 75, "1": 0, "mixed": 200}, '/absolute/path_to/PNOA_CYL_2020_25cm_OF_etrsc_rgb_hu30_h05__0345_6-4_0.tiff')
         """
-        query = "select filename, n_samples_0, n_samples_1, n_samples_mixed from extractions"
+        query = "select filename, n_samples_0, n_samples_1, n_samples_mixed, auto_sampling, pnoa_tile from extractions order by filename"
         results = spt.list_all(sample_file, query)
         sampling_info = []
         for row in results:
-            sinfo = {"0": row[1], "1": row[2], "mixed": row[3]}
+            sinfo = {"0": row[1], "1": row[2], "mixed": row[3], "auto_sampling": bool(row[4])}
             raster_path = os.path.join(self.extraction_folder, row[0])
-            sampling_info.append((sinfo, raster_path))
+            if not ext_filter or ext_filter in row[0]:
+                sampling_info.append((sinfo, raster_path))
 
         return sampling_info
 

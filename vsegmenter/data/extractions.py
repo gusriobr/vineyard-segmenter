@@ -53,8 +53,9 @@ def update_extraction_info(sample_file, pnoa_index):
         query = "update extractions set filename = ?, pnoa_tile=? where id = ?"
         conn.execute(query, data)
     conn.commit()
-
     conn.close()
+
+    logging.info("Extraction features updated with pnoa info")
 
 if __name__ == '__main__':
 

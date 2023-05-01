@@ -98,7 +98,7 @@ def get_num_autosampling(width, height, rect_size):
 
 
 def extract_images(src_file, file_id, mask_file, dst_folder, samples_per_category, rect_size=(256, 256),
-                   delete_folder=True, mixed_threshold=0.3, auto_mixed=True):
+                   delete_folder=True, mixed_threshold=0.2, max_samples_per_extraction=200):
     """
     :param src_file:
     :param mask_file:
@@ -157,9 +157,11 @@ def extract_images(src_file, file_id, mask_file, dst_folder, samples_per_categor
 
     num_polygons = samples_per_category.get("mixed", 0)
     if num_polygons > 0:
-        if auto_mixed:
+        auto_sampling = samples_per_category.get("auto_sampling", True)
+        if auto_sampling:
             num_polygons = get_num_autosampling(width, height, rect_size)
-        logging.info(f"Extracting {num_polygons} images with category representation threshold = {mixed_threshold}")
+            num_polygons = min(num_polygons, max_samples_per_extraction)
+        logging.info(f"Extracting {num_polygons} images with category representation threshold = {mixed_threshold} img size={(width, height)} ")
 
         def f_threshold(mask_data):
             return check_categories(mask_data, zero_threshold=mixed_threshold, one_threshold=mixed_threshold)
@@ -228,8 +230,7 @@ def get_random_images2(dst_folder, image_filter, mask_file, prefix, init_counter
 
 
 def get_random_samples(dst_folder, image_filter, original_src, original_mask, prefix, init_counter, num_polygons,
-                       rect_size,
-                       max_iterations=10_000, rotate=True, rotate_freq=0.5):
+                       rect_size, max_iterations=50_000, rotate=True, rotate_freq=0.5):
     """
     Get ramdon images from dastaset folder
     :param dst_folder:
@@ -270,7 +271,7 @@ def get_random_samples(dst_folder, image_filter, original_src, original_mask, pr
         num_iterations += 1
         if num_iterations > max_iterations:
             raise ValueError(
-                f"Couldn't extract enough images after {max_iterations} iterations found {i}. Check the image mask: {mask_file}")
+                f"Couldn't extract enough images after {max_iterations} iterations found {i}. Check the image mask.")
         mask_array = np.array(mask_rect)
         if has_rotated and np.count_nonzero(mask_array[mask_array == fill_color]) > 0:
             # when the image has rotated some of the info is lost, this portions of the image
@@ -297,7 +298,7 @@ def check_categories(mask_data, zero_threshold=None, one_threshold=None):
     return perc_zeros >= zero_threshold and perc_ones >= one_threshold
 
 
-def run_extraction(raster_extractions, samples_file, dts_folder, rect_size, remake_folders=True):
+def run_extraction(sampling_info, samples_file, dts_folder, rect_size, remake_folders=True):
     logging.info(f"Starting dataset extraction on folder: {dts_folder}")
     output_mask_folder = dts_folder + "/masks"
     samples_folder = dts_folder + "/samples"
@@ -305,16 +306,16 @@ def run_extraction(raster_extractions, samples_file, dts_folder, rect_size, rema
     remake_folder(output_mask_folder, remake_folders)
     remake_folder(samples_folder, remake_folders)
 
-    for raster_id, num_samples, raster in raster_extractions:
+    for raster_id, num_samples, raster in sampling_info:
         logging.info(f"Processing file {raster} to extract samples: {num_samples}")
         output_mask_file = os.path.join(output_mask_folder, os.path.basename(raster.replace(".tiff", "_mask.tiff")))
         burn_samples(samples_file, raster, output_mask_file)
-        logging.info(f"Image mask created from polygons")
+        logging.info(f"Image mask created from polygons: {output_mask_file}")
 
-        logging.info(f"Extracted samples from mask")
+        logging.info(f"Extracting samples from mask")
         extract_images(raster, raster_id, output_mask_file, samples_folder, rect_size=rect_size,
                        samples_per_category=num_samples,
-                       mixed_threshold=0.3, delete_folder=remake_folders,
+                       mixed_threshold=0.2, delete_folder=remake_folders,
                        )
     logging.info("Image extraction finished successfully!")
 
