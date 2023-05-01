@@ -113,7 +113,7 @@ def up_img(img, shape, order, threshold=0.5):
     return np.where(img >= threshold, 1, 0).astype(np.uint8)
 
 
-def build_model(model_folder, load_from_weights=True, img_size=48):
+def build_model(weights_file=None, img_size=48):
     """
     :param model_folder:
     :param img_size:
@@ -121,7 +121,7 @@ def build_model(model_folder, load_from_weights=True, img_size=48):
     """
     import unet
     from unet import custom_objects
-    if load_from_weights:
+    if weights_file:
         unet_model = unet.build_model(128, 128,
                                       channels=3,
                                       num_classes=2,
@@ -129,9 +129,9 @@ def build_model(model_folder, load_from_weights=True, img_size=48):
                                       filters_root=64,
                                       padding="same"
                                       )
-        weights_file = os.path.join(model_folder, "variables/variables")
+        # weights_file = os.path.join(model_folder, "variables/variables")
         # weights_file = '/workspaces/wml/vineyard-segmenter/results/tmp/unet/2023-04-27T16-19_53'
-        weights_file = '/workspaces/wml/vineyard-segmenter/results/tmp/unet/2023-04-29T23-00_32'
+        # weights_file = '/workspaces/wml/vineyard-segmenter/results/tmp/unet/2023-04-29T23-00_32'
         unet_model.load_weights(weights_file)
     else:
         unet_model = tf.keras.models.load_model(model_folder, custom_objects=custom_objects)
@@ -192,6 +192,27 @@ def get_input_images(args):
     return input_images
 
 
+def predict_on_raster(raster_file, model, output_file, scale_factor=0.5, patch_size=128, sliding_batch_size=1024):
+    image = io.imread(raster_file)
+    original_shape = image.shape
+    if scale_factor != 1:
+        image = down_img(image, scale=scale_factor)
+
+    # apply model to rescaled image
+    logging.info("Applying model to image")
+    img_prediction = apply_model_slide(image, model, window_size=(patch_size, patch_size), step_size=patch_size,
+                                       batch_size=sliding_batch_size)
+    skimage.io.imsave(output_file, img_prediction)
+    logging.info("Applying geolocation info")
+    if len(img_prediction.shape) == 2:
+        img_prediction = img_prediction[:, :, np.newaxis]
+    # rescale image to original raster size
+    if scale_factor != 1:
+        img_prediction = up_img(img_prediction, (original_shape[0], original_shape[1], 1), order=1)
+    georeference_image(img_prediction, raster_file, output_file, scale=1, bands=1)
+    logging.info("Finished processing file {}, \ngenerated output raster {}.".format(raster_file, output_file))
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
     parser.add_argument("version", type=int, help="Model version")
@@ -229,7 +250,7 @@ if __name__ == '__main__':
         model_path = m[0]
         tag = m[1]  # model_name
 
-        model = build_model(model_path)
+        unet_model = build_model(model_path)
 
         total = len(input_images)
         for idx, raster_file in enumerate(input_images):
@@ -239,25 +260,8 @@ if __name__ == '__main__':
             outf = os.path.join(output_folder, "{}_{}{}".format(base, tag, ext))
 
             # load and scale the input image
-            image = io.imread(raster_file)
-            original_shape = image.shape
-            image = down_img(image, scale=scale_factor)
-
-            # apply model to rescaled image
-            logging.info("Applying model to image")
-            img_prediction = apply_model_slide(image, model, window_size=(patch_size, patch_size), step_size=patch_size,
-                                               batch_size=SLIDING_BATCH_SIZE)
-            skimage.io.imsave(outf, img_prediction)
-
-            logging.info("Applying geolocation info")
-            # rimg = read_img(outf)
-            if len(img_prediction.shape) == 2:
-                img_prediction = img_prediction[:, :, np.newaxis]
-            # rescale image to original raster size
-            img_prediction = up_img(img_prediction, (original_shape[0], original_shape[1], 1), order=1)
-
-            georeference_image(img_prediction, raster_file, outf, scale=1, bands=1)
-            logging.info("Finished processing file {}, \ngenerated output raster {}.".format(raster_file, outf))
+            predict_on_raster(raster_file, unet_model, outf, patch_size=patch_size, scale_factor=scale_factor,
+                              sliding_batch_size=SLIDING_BATCH_SIZE)
 
     # plt.show()
     logging.info("========================================")
