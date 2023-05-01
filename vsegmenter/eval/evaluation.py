@@ -9,7 +9,6 @@ from postproc.run_post import post_process_images
 def evaluate_on_dts(model, tag, dts, version, output_folder):
     # runs model on dataset extractions to evaluation the modelo on dataset
     raster_files = dts.get_extration_files()
-    raster_files = raster_files[:1]
     total = len(raster_files)
     output_raster_list = []
     for idx, r_file in enumerate(raster_files):
