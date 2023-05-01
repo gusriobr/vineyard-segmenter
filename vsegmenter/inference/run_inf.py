@@ -1,3 +1,4 @@
+import argparse
 import glob
 import logging
 import os
@@ -129,6 +130,8 @@ def build_model(model_folder, load_from_weights=True, img_size=48):
                                       padding="same"
                                       )
         weights_file = os.path.join(model_folder, "variables/variables")
+        # weights_file = '/workspaces/wml/vineyard-segmenter/results/tmp/unet/2023-04-27T16-19_53'
+        weights_file = '/workspaces/wml/vineyard-segmenter/results/tmp/unet/2023-04-29T23-00_32'
         unet_model.load_weights(weights_file)
     else:
         unet_model = tf.keras.models.load_model(model_folder, custom_objects=custom_objects)
@@ -165,43 +168,52 @@ def load_pnoa_filenames(base_folder, tile_file):
     lst_files.sort()
     return lst_files
 
+
 def is_cuda_disabled():
     cuda_env_var = os.environ.get('CUDA_VISIBLE_DEVICES', '')
     return not cuda_env_var
 
-if __name__ == '__main__':
-    version = 4
-    # load srs model
-    pnoa_index_file = None
-    if len(sys.argv) > 1:
-        pnoa_index_file = sys.argv[1]
-        logging.info(f"Received as parameter pnoa index file: {pnoa_index_file}")
 
-    if pnoa_index_file is None:
-        # default index file for testing
-        pnoa_index_file = cfg.project_file('vsegmenter/inference/pnoa_files.txt')
-        pnoa_index_file = cfg.resources('pnoa_ribera.txt')
+def get_input_images(args):
+    pnoa_index_file = args.pnoa_index_file
+    if args.run_on_dts:
+        # by default use extraction files from dataset
+        dts = Dataset(dts_folder='/media/gus/data/viticola/datasets/segmenter/v5')
+        input_images = dts.get_extration_files()
+    else:
+        # find all nested images
+        if pnoa_index_file is None:
+            # default index file for testing
+            pnoa_index_file = cfg.project_file('vsegmenter/inference/pnoa_files.txt')
+            pnoa_index_file = cfg.resources('pnoa_ribera.txt')
+        logging.info(f"Using pnoa index as input: {pnoa_index_file}")
+        input_images = load_pnoa_filenames(cfg.PNOA_BASE_FOLDER, pnoa_index_file)
+
+    return input_images
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
+    parser.add_argument("version", type=int, help="Model version")
+    parser.add_argument("--run_on_dts", type=bool, help="Run model on extraction files", default=False, required=False)
+    parser.add_argument("--pnoa_index_file", type=str, help="Fichero que contiene el listado de hojas pnoa a procesar",
+                        default=None, required=False)
+
+    args = parser.parse_args()
+
+    version = args.version
 
     logging.info(f"IS_CUDA_DISABLED = : {is_cuda_disabled()}")
 
-
-
-
     model_folder = cfg.results("")
-
     models = [
+        # [os.path.join(model_folder, f"unet_v{version}.model"), f'unet_v{version}'],
         [os.path.join(model_folder, f"unet_v{version}.model"), f'unet_v{version}'],
     ]
     output_folder = cfg.results(f"processed/v{version}")
 
-    # find all nested images
-    input_images = load_pnoa_filenames(cfg.PNOA_BASE_FOLDER, pnoa_index_file)
+    input_images = get_input_images(args)
 
-    # by default use extraction files from dataset
-    dts = Dataset(dts_folder='/media/gus/data/viticola/datasets/segmenter/v5')
-    input_images = dts.get_extration_files()
-
-    output_folder = '/tmp/salidas/'
     logging.info(f"Number of input images to process: {len(input_images)}")
 
     patch_size = 128

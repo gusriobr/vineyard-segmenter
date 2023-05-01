@@ -12,14 +12,15 @@ def create_connection(sqlite_path):
     return conn
 
 
-def create_spatialite_table(db_file, table_name, table_features_sql, geomtry_col='geom', srid=4326, drop_if_exists=False):
+def create_spatialite_table(db_file, table_name, table_features_sql, geometry_col='geom', srid=4326, drop_if_exists=False):
     conn = create_connection(db_file)
     if drop_if_exists:
         conn.execute(f"DROP TABLE IF EXISTS {table_name}")
-        conn.execute(f"SELECT DiscardGeometryColumn('{table_name}', '{geomtry_col}')")
-    cursor = conn.cursor()
-    cursor.execute(table_features_sql)
-    cursor.execute(f"SELECT AddGeometryColumn('{table_name}', '{geomtry_col}', {srid}, 'POLYGON', 'XY');")
+        conn.execute(f"SELECT DiscardGeometryColumn('{table_name}', '{geometry_col}')")
+
+    conn.execute("SELECT InitSpatialMetadata(1)")
+    conn.execute(table_features_sql)
+    conn.execute(f"SELECT AddGeometryColumn('{table_name}', '{geometry_col}', {srid}, 'POLYGON', 'XY')")
     conn.commit()
 
 
