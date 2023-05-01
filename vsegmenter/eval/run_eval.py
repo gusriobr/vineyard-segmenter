@@ -8,12 +8,14 @@ import tensorflow as tf
 import unet
 
 from data.dataset import Dataset
+from inference.run_inf import predict_on_raster, build_model
+from postproc.run_post import post_process_images
 from vsegmenter import cfg
 
 cfg.configLog()
 
 
-def load_model(model_file):
+def load_model(weights_file=None):
     unet_model = unet.build_model(128, 128,
                                   channels=3,
                                   num_classes=2,
@@ -21,8 +23,8 @@ def load_model(model_file):
                                   filters_root=64,
                                   padding="same"
                                   )
-    weights_file = os.path.join(model_file, "variables/variables")
-    unet_model.load_weights(weights_file)
+    if weights_file:
+        unet_model.load_weights(weights_file)
     unet.finalize_model(unet_model,
                         # loss=losses.SparseCategoricalCrossentropy(from_logits=True),
                         # metrics=[metrics.SparseCategoricalAccuracy()],
@@ -33,39 +35,33 @@ def load_model(model_file):
 
 
 if __name__ == '__main__':
-    version = "v5"
+    version = 5
     model_label = "unet"
     img_size = 128
 
-    dataset_file = cfg.dataset(f'{version}/dataset_{img_size}.pickle')
-    _, _, x_val, y_val = Dataset.load_from_file(dataset_file)
+    tag = f"{model_label}_v{version}"
+    dts = Dataset(cfg.dataset(f'v{version}'))
 
-    x_val = x_val[:20]
-    y_val = y_val[:20]
+    output_folder = cfg.results(f"processed/v{version}")
+    weights_file = '/media/gus/workspace/wml/vineyard-segmenter/results/unet_v5/2023-04-29T23-00_32'
+    logging.info(f"Loading file using weights file {weights_file}")
+    unet_model = build_model(weights_file)
 
-    validation_dataset = tf.data.Dataset.from_tensor_slices((x_val, y_val))
+    # runs model on dataset extractions to evaluation the modelo on dataset
+    raster_files = dts.get_extration_files()
+    total = len(raster_files)
+    output_raster_list = []
+    for idx, r_file in enumerate(raster_files):
+        logging.info("Processing image {} of {} - {}".format(idx + 1, total, r_file))
+        filename = os.path.basename(r_file)
+        base, ext = os.path.splitext(filename)
+        output_file = os.path.join(output_folder, "{}_{}{}".format(base, tag, ext))
 
-    model = load_model(cfg.results("unet_v4.model"))
+        # predict_on_raster(r_file, unet_model, output_file)
+        output_raster_list.append(output_file)
 
-    y_pred = model.predict(x_val)
-    pred_mask = tf.math.argmax(y_pred, axis=-1)
-    pred_mask = pred_mask[..., np.newaxis]
+    logging.info(f"Prediction on dataset finished. Starting post-processing")
+    output_db_file = cfg.results(f"processed/v{version}/polygons_v{version}.sqlite")
+    post_process_images(output_raster_list, output_db_file)
+    logging.info(f"Evaluation finished output_folder: {output_folder}")
 
-    # detect the problems, get the top-20 images with errors
-    bg_diff = np.abs(y_val[:, ..., 1], y_pred[:, ..., 1])
-    sum_bg_diff_item_wise = np.sum(bg_diff, axis=(1, 2))
-    ordered = np.argsort(-sum_bg_diff_item_wise)
-    ordered = ordered[:20]
-
-    # get original image files
-    dts = Dataset(os.path.dirname(dataset_file))
-    lst = dts.get_samples_info_by_idx(ordered)
-    for i, index in enumerate(ordered):
-        lst[i]["prediction"] = pred_mask[index][..., 0]
-
-    # append mask as item
-
-    results = model.evaluate(x_val, y_val, batch_size=128)
-    logging.info(f"test loss, test acc: {results}")
-    with open(cfg.results(f"{model_label}_evaluation.json"), "w") as f:
-        json.dump(results, f)

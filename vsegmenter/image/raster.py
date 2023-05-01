@@ -1,14 +1,24 @@
+import os
+
 import numpy as np
 import rasterio
 from PIL import Image
 from affine import Affine
 from pyproj import Transformer
+from rasterio.crs import CRS
 from rasterio.mask import mask
 from rasterio.warp import Resampling
+from rasterio.warp import calculate_default_transform
 from rasterio.warp import reproject
 from shapely.geometry import Polygon
 from shapely.geometry import mapping
 from shapely.ops import transform as shapely_transform
+from pyproj import Transformer
+from shapely.ops import transform as shapely_transform
+from rasterio.warp import reproject, Resampling
+import numpy as np
+import rasterio
+from rasterio.warp import calculate_default_transform, reproject, Resampling
 
 
 def _write_raster(img, img_filename, meta):
@@ -76,7 +86,7 @@ def get_raster_bbox(raster_file):
         return Polygon.from_bounds(left, bottom, right, top), crs
 
 
-def clip_raster_with_polygon(shapely_geometry, geometry_crs, raster_path, output_path):
+def clip_raster_with_polygon(shapely_geometry, geometry_crs, raster_path, output_path, output_srid=None):
     """
     Clips a raster with a Shapely geometry and saves the resulting image to a file.
 
@@ -89,12 +99,17 @@ def clip_raster_with_polygon(shapely_geometry, geometry_crs, raster_path, output
     :param output_path: The path to save the output raster file, including the .tiff extension.
     :type output_path: str
 
+    :param output_srid: The CRS of the output raster file. Optional, defaults to the CRS of the input raster.
+    :type output_srid: int, optional
+
     :return: None
     """
     # Open the raster file using Rasterio
+    raster_csr = None
     with rasterio.open(raster_path) as src:
-        # project shapely polygon to raster csr if needed
-        if src.crs.to_epsg() != geometry_crs:
+        # project shapely polygon to raster crs if needed
+        raster_csr = src.crs.to_epsg()
+        if raster_csr != geometry_crs:
             transformer = Transformer.from_crs(geometry_crs, src.crs.to_epsg(), always_xy=True)
             shapely_geometry = shapely_transform(transformer.transform, shapely_geometry)
             min_x, min_y, max_x, max_y = shapely_geometry.bounds
@@ -119,3 +134,43 @@ def clip_raster_with_polygon(shapely_geometry, geometry_crs, raster_path, output
         # Write the clipped raster to a new file using Rasterio's `write()` function
         with rasterio.open(output_path, "w", **out_meta) as dest:
             dest.write(out_image)
+
+        # If output_srid is specified and different from the input raster CRS, reproject the clipped raster before saving
+        if output_srid and raster_csr != output_srid:
+            tmp_filename = output_path + "_tmp"
+            reproject_raster(output_path, tmp_filename, output_srid)
+            # rename
+            os.remove(output_path)
+            os.rename(tmp_filename, output_path)
+
+
+def reproject_raster(input_raster_path, output_raster_path, dst_crs):
+    # Read the input raster data
+    with rasterio.open(input_raster_path) as src:
+        # Calculate the default transform to reproject the raster
+        transform, width, height = calculate_default_transform(src.crs, dst_crs, src.width, src.height, *src.bounds)
+
+        # Update the metadata with the new CRS, transform, width, and height
+        out_meta = src.meta.copy()
+        out_meta.update({
+            'crs': dst_crs,
+            'transform': transform,
+            'width': width,
+            'height': height
+        })
+
+        # Read the input raster data into a numpy array
+        src_array = src.read()
+
+        # Create an empty numpy array with the same shape as the source array to store the reprojected data
+        dst_array = np.empty_like(src_array)
+
+        # Reproject the raster data
+        reproject(src_array, dst_array, src_transform=src.transform, src_crs=src.crs,
+            dst_transform=transform,dst_crs=dst_crs,
+            resampling=Resampling.nearest
+        )
+
+        # Write the reprojected data to the output raster file
+        with rasterio.open(output_raster_path, 'w', **out_meta) as dst:
+            dst.write(dst_array)

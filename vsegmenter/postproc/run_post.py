@@ -4,12 +4,15 @@ Post processing to create feature file out from raster images
 import argparse
 import logging
 import os
+import time
+from pathlib import Path
 
 import fiona
 import rasterio
 from rasterio import features
 from shapely.geometry import mapping
 from shapely.geometry import shape
+from tqdm import tqdm
 
 import geo.spatialite as spt
 import geo.vectors as geov
@@ -106,37 +109,84 @@ def simplify_features(input_file, output_file):
         source_driver = source.driver
         source_crs = source.crs
         source_schema = source.schema
-        polys_filtered = [simplify_polygon(shape(p["geometry"])) for p in source]
+        polys = [p for p in source]
+
+    # Simplificar los polígonos y almacenar en una lista
+    with tqdm(total=len(polys), desc="Simplifying polygons") as pbar:
+        polys_filtered = []
+        for p in polys:
+            poly_filtered = simplify_polygon(shape(p["geometry"]))
+            polys_filtered.append(poly_filtered)
+            pbar.update(1)
+
+    logging.info(f"Saving simplified features into {output_file}")
 
     with fiona.open(output_file, "w", driver=source_driver, schema=source_schema, crs=source_crs) as dest:
-        for r in polys_filtered:
-            feature = {'geometry': mapping(r), 'properties': {}}
-            dest.write(feature)
+        records = [{'geometry': mapping(r), 'properties': {}} for r in polys_filtered]
+        dest.writerecords(records)
 
 
-if __name__ == '__main__':
-
-    ### test filtering
-    parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
-    parser.add_argument("version", type=int, help="Model version")
-    args = parser.parse_args()
-
-    version = args.version
-
-    input_folder = cfg.results(f"processed/v{version}")
-    input_images = [os.path.join(input_folder, f_img) for f_img in os.listdir(input_folder) if f_img.endswith(".tif")]
-    # output_file = cfg.results(f"processed/v{iteration}/polygons_v{iteration}.shp")
-    output_file = cfg.results(f"processed/v{version}/polygons_v{version}.sqlite")
-
-    total = len(input_images)
-    for i, f_image in enumerate(input_images):
+def post_process_images(image_files, output_file):
+    total = len(image_files)
+    for i, f_image in enumerate(image_files):
         logging.info("Vectorizing image {} of {}".format(i + 1, total))
         vectorize_predictions(f_image, output_file, feature_filter=filter_by_area(min_area=300), db_file_srid=25830)
 
     filtered_output_file = output_file.replace(".sqlite", "_filtered.sqlite")
     logging.info(f"Simplifying polygons into {filtered_output_file}")
     simplify_features(output_file, filtered_output_file)
-
     logging.info("Vectorized geometries successfully written.")
 
 
+def run_process(input_folder, output_file, interactive=False, wait_time=15, max_wait=15 * 60):
+    # Procesa las imágenes existentes en el directorio input_folder
+    input_images = [os.path.join(input_folder, f_img) for f_img in os.listdir(input_folder) if f_img.endswith(".tif")]
+    logging.info(f"Running post-processing actions on existing images: {len(input_images)}")
+    # process_images(input_images, output_file)
+
+    # Si se ejecuta en modo interactivo, espera y procesa nuevas imágenes que vayan apareciendo
+    if interactive:
+        logging.info(f"Interactive loop, waiting for new images on : {input_folder}")
+        processed_files = set(input_images)
+        no_new_images_time = 0
+
+        while no_new_images_time < max_wait:
+            input_files = set(Path(input_folder).glob("*.tif"))
+
+            # Encuentra nuevos archivos que aún no se han procesado
+            new_files = input_files.difference(processed_files)
+            if new_files:
+                logging.info(f"New files found : {new_files}")
+                post_process_images(new_files, output_file)
+                processed_files.update(new_files)
+                no_new_images_time = 0
+            else:
+                time.sleep(wait_time)
+                no_new_images_time += wait_time
+
+
+if __name__ == '__main__':
+    ### test filtering
+    # parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
+    # parser.add_argument("version", type=int, help="Model version")
+    #parser.add_argument("--interactive",help="Run in interactive mode", default=False)
+    # args = parser.parse_args()
+    #
+    # version = args.version
+    # interactive = args.interactive
+    version = 5
+    interactive = True
+
+    output_file = '/media/gus/workspace/wml/vineyard-segmenter/results/unet_v5/polygons_v5.sqlite'
+    filtered_output_file = '/media/gus/workspace/wml/vineyard-segmenter/results/unet_v5/polygons_v5_filtered.sqlite'
+
+    simplify_features('/media/gus/workspace/wml/vineyard-segmenter/results/unet_v5/polygons_v5.sqlite',
+                      '/media/gus/workspace/wml/vineyard-segmenter/results/unet_v5/polygons_v5_filtered.sqlite')
+    exit(0)
+
+    input_folder = cfg.results(f"processed/v{version}")
+    output_file = cfg.results(f"processed/v{version}/polygons_v{version}.sqlite")
+
+    run_process(input_folder, output_file, interactive=interactive)
+
+    logging.info("Vectorized geometries successfully written.")

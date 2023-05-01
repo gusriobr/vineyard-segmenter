@@ -8,7 +8,7 @@ import os.path
 
 import cfg
 from data.extractions import update_extraction_info
-from image.pnoa import download_pnoa_tile, pnoa_storage_path, create_pnoa_list_by_layer
+from vsegmenter.image.pnoa import download_pnoa_tile, pnoa_storage_path, create_pnoa_list_by_layer
 
 cfg.configLog()
 
