@@ -16,7 +16,7 @@ from vsegmenter import cfg
 cfg.configLog()
 
 if __name__ == '__main__':
-    version = 4
+    version = 6
     label = "unet"
     img_size = 128
 
@@ -33,9 +33,11 @@ if __name__ == '__main__':
 
     model_file = cfg.results(f"{label}_v{version}.model")
     history_file = cfg.results(f"{label}_v{version}_history.json")
-    log_dir_path = cfg.results(f'tmp/{label}/{datetime.now().strftime("%Y-%m-%dT%H-%M_%S")}')
+    log_dir_path = cfg.results(f'tmp/{label}_{version}/{datetime.now().strftime("%Y-%m-%dT%H-%M_%S")}')
 
-    prev_model = None # cfg.results(f"unet_v3_a.model")
+    weights_file = None
+    # weights_file = '/workspaces/wml/vineyard-segmenter/results/tmp/unet/2023-04-27T16-19_53'
+    weights_file = "/workspaces/wml/vineyard-segmenter/results/unet_v5/2023-04-29T23-00_32"
     logging.info(f"model_file = {model_file}")
     logging.info(f"history_file = {history_file}")
     logging.info(f"log_dir_path = {log_dir_path}")
@@ -47,10 +49,7 @@ if __name__ == '__main__':
                              filters_root=64,
                              padding="same"
                              )
-    if prev_model:
-        weights_file = os.path.join(prev_model, "variables/variables")
-        # weights_file = '/workspaces/wml/vineyard-segmenter/results/tmp/unet/2023-04-27T16-19_53'
-        # weights_file = '/workspaces/wml/vineyard-segmenter/results/unet_v4.model/variables/variables'
+    if weights_file:
         logging.info(f"Training prev model_file with weights = {weights_file}")
         model.load_weights(weights_file)
 
@@ -68,7 +67,7 @@ if __name__ == '__main__':
                            # learning_rate_scheduler=SchedulerType.WARMUP_LINEAR_DECAY,
                            callbacks=callbacks)
 
-    EPOCHS = 2
+    EPOCHS = 2000
     LEARNING_RATE = 1e-3
     batch_size = 32
     history = trainer.fit(model, train_dataset, validation_dataset, epochs=EPOCHS, batch_size=batch_size)
