@@ -166,7 +166,7 @@ def create_pnoa_list_by_layer(index_file, db_file, layer_name, geometry_column):
     return  set([p[1] for p in pnoa_tiles])  # keep filename
 
 
-def get_do_geomety_by_name(do_name, srid=None):
+def get_WineDO_geomety_by_name(do_name, srid=None):
     """
     :param do_name: do name
     :return: shapely geometry
@@ -240,18 +240,20 @@ if __name__ == '__main__':
     ########################
     # creación de ficheros de índices pnoa a partir de geometrias/listado municipios de DO's
     ########################
-    # for do_name in ["ribera", "arlanza", "toro"]:
-    #     # utilizando geometría do
-    #     do_geo = get_do_geomety_by_name("ribera", srid="4258")
-    #     raster_files = create_pnoa_list_for_geo(index_file, do_geo)
-    #     raster_files = [cfg.pnoa(filename) for filename in raster_files]
-    #
-    #     # utilizando municipios
-    #     # raster_files = create_pnoa_list_for_municipalities(index_file, ["05132","05014","05132"])
-    #
-    #     with open(cfg.resources(f"pnoa_{do_name}.txt"), 'w') as f:
-    #         for filename in raster_files:
-    #             f.write(f"{filename}\n")
+    for do_name in ["ribera", "arlanza", "toro"]:
+        # utilizando geometría do
+        do_geo = get_WineDO_geomety_by_name(do_name, srid="4258")
+        raster_files = create_pnoa_list_for_geo(index_file, do_geo)
+        raster_files = [cfg.pnoa(filename) for filename in raster_files]
+
+        # utilizando municipios
+        # raster_files = create_pnoa_list_for_municipalities(index_file, ["05132","05014","05132"])
+        do_filename = cfg.resources(f"pnoa_{do_name}.txt")
+        with open(do_filename, 'w') as f:
+            for filename in raster_files:
+                f.write(f"{filename}\n")
+        logging.info(f"Created pnoa file for do {do_name} in {do_filename}")
+    exit(0)
 
     ########################
     #

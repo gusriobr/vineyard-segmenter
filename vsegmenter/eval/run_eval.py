@@ -36,7 +36,7 @@ def load_model(weights_file=None):
 
 
 if __name__ == '__main__':
-    version = 5
+    version = 6
     model_label = "unet"
     img_size = 128
 
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     dts = Dataset(cfg.dataset(f'v{version}'))
 
     output_folder = cfg.results(f"processed/v{version}")
-    weights_file = '/media/gus/workspace/wml/vineyard-segmenter/results/unet_v5/2023-04-29T23-00_32'
+    weights_file = cfg.results('tmp/unet_6/2023-05-01T08-55_44')
     logging.info(f"Loading file using weights file {weights_file}")
     unet_model = build_model(weights_file)
     evaluate_on_dts(unet_model, tag, dts, version, output_folder)

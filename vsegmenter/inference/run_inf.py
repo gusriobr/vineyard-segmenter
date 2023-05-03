@@ -129,9 +129,6 @@ def build_model(weights_file=None, img_size=48):
                                       filters_root=64,
                                       padding="same"
                                       )
-        # weights_file = os.path.join(model_folder, "variables/variables")
-        # weights_file = '/workspaces/wml/vineyard-segmenter/results/tmp/unet/2023-04-27T16-19_53'
-        # weights_file = '/workspaces/wml/vineyard-segmenter/results/tmp/unet/2023-04-29T23-00_32'
         unet_model.load_weights(weights_file)
     else:
         unet_model = tf.keras.models.load_model(model_folder, custom_objects=custom_objects)
@@ -175,17 +172,18 @@ def is_cuda_disabled():
 
 
 def get_input_images(args):
-    pnoa_index_file = args.pnoa_index_file
     if args.run_on_dts:
         # by default use extraction files from dataset
-        dts = Dataset(dts_folder='/media/gus/data/viticola/datasets/segmenter/v5')
+        dts = Dataset(dts_folder='/media/gus/data/viticola/datasets/segmenter/v5_ribera')
         input_images = dts.get_extration_files()
     else:
+        pnoa_index_file = args.pnoa_index_file
         # find all nested images
         if pnoa_index_file is None:
             # default index file for testing
             pnoa_index_file = cfg.project_file('vsegmenter/inference/pnoa_files.txt')
-            pnoa_index_file = cfg.resources('pnoa_ribera.txt')
+            # pnoa_index_file = cfg.resources('pnoa_ribera.txt')
+            pnoa_index_file = cfg.resources('pnoa_arlanza.txt')
         logging.info(f"Using pnoa index as input: {pnoa_index_file}")
         input_images = load_pnoa_filenames(cfg.PNOA_BASE_FOLDER, pnoa_index_file)
 
@@ -214,27 +212,24 @@ def predict_on_raster(raster_file, model, output_file, scale_factor=0.5, patch_s
 
 
 if __name__ == '__main__':
+    logging.info(f"IS_CUDA_DISABLED = : {is_cuda_disabled()}")
+
     parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
     parser.add_argument("version", type=int, help="Model version")
     parser.add_argument("--run_on_dts", type=bool, help="Run model on extraction files", default=False, required=False)
     parser.add_argument("--pnoa_index_file", type=str, help="Fichero que contiene el listado de hojas pnoa a procesar",
                         default=None, required=False)
-
     args = parser.parse_args()
 
     version = args.version
-
-    logging.info(f"IS_CUDA_DISABLED = : {is_cuda_disabled()}")
-
     model_folder = cfg.results("")
     models = [
         # [os.path.join(model_folder, f"unet_v{version}.model"), f'unet_v{version}'],
-        [os.path.join(model_folder, f"unet_v{version}.model"), f'unet_v{version}'],
+        [f'unet_v{version}',cfg.results('tmp/unet_6/2023-05-01T08-55_44')],
     ]
     output_folder = cfg.results(f"processed/v{version}")
 
     input_images = get_input_images(args)
-
     logging.info(f"Number of input images to process: {len(input_images)}")
 
     patch_size = 128
@@ -247,10 +242,9 @@ if __name__ == '__main__':
         # clear tensorflow memory
         K.clear_session()
         tf.keras.backend.clear_session()
-        model_path = m[0]
-        tag = m[1]  # model_name
-
-        unet_model = build_model(model_path)
+        tag = m[0]  # model_name
+        weights_file = m[1]
+        unet_model = build_model(weights_file)
 
         total = len(input_images)
         for idx, raster_file in enumerate(input_images):
