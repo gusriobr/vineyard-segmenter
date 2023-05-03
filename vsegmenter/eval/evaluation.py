@@ -16,9 +16,11 @@ def evaluate_on_dts(model, tag, dts, version, output_folder):
         filename = os.path.basename(r_file)
         base, ext = os.path.splitext(filename)
         output_file = os.path.join(output_folder, "{}_{}{}".format(base, tag, ext))
-
-        predict_on_raster(r_file, model, output_file)
-        output_raster_list.append(output_file)
+        try:
+            predict_on_raster(r_file, model, output_file)
+            output_raster_list.append(output_file)
+        except:
+            logging.error(f"Error while predicting on raster {r_file}")
 
     logging.info(f"Prediction on dataset finished. Starting post-processing")
     output_db_file = cfg.results(f"processed/v{version}/polygons_v{version}.sqlite")

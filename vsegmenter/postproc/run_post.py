@@ -46,10 +46,10 @@ def vectorize_predictions(raster_file, db_file, filter_value=1, feature_filter=N
     # transform polygons to db srid
     logging.info(f"Raster file read.")
     polys = [shape(p[0]) for p in polys]
-    logging.info(f"Merging overlapping vectorized {len(polys)} polygons.")
+    logging.info(f"Merging {len(polys)} overlapped vectorized polygons.")
     polys = geov.merge_polygons(polys, multiparts=False)
 
-    logging.info(f"Projecting {len(polys)} from srid={raster_crs} and into srid={db_file_srid}")
+    logging.info(f"Projecting {len(polys)} from srid={raster_crs} into srid={db_file_srid}")
     polys = [shape(proj.transform(raster_crs, db_file_srid, p)) for p in polys]
 
     if feature_filter:
@@ -138,11 +138,16 @@ def post_process_images(image_files, output_file):
     logging.info("Vectorized geometries successfully written.")
 
 
-def run_process(input_folder, output_file, interactive=False, wait_time=15, max_wait=15 * 60):
+def run_process(input_folder, output_file, interactive=False, wait_time=15, max_wait=15 * 60, process_existing=True):
     # Procesa las imágenes existentes en el directorio input_folder
-    input_images = [os.path.join(input_folder, f_img) for f_img in os.listdir(input_folder) if f_img.endswith(".tif")]
-    logging.info(f"Running post-processing actions on existing images: {len(input_images)}")
-    # process_images(input_images, output_file)
+    input_images = [os.path.join(input_folder, f_img) for f_img in os.listdir(input_folder) if
+                    f_img.endswith(".tif")]
+    if process_existing:
+        logging.info(f"Running post-processing actions on existing images: {len(input_images)}")
+        post_process_images(input_images, output_file)
+    else:
+        # add all existing files as processed
+        logging.info(f"Avoiding processing existing images: {input_images}")
 
     # Si se ejecuta en modo interactivo, espera y procesa nuevas imágenes que vayan apareciendo
     if interactive:
@@ -166,27 +171,21 @@ def run_process(input_folder, output_file, interactive=False, wait_time=15, max_
 
 
 if __name__ == '__main__':
-    ### test filtering
-    # parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
-    # parser.add_argument("version", type=int, help="Model version")
-    #parser.add_argument("--interactive",help="Run in interactive mode", default=False)
-    # args = parser.parse_args()
-    #
-    # version = args.version
-    # interactive = args.interactive
-    version = 5
-    interactive = True
+    parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
+    parser.add_argument("version", type=int, help="Model version")
+    parser.add_argument("--interactive", help="Run in interactive mode", default=False)
+    parser.add_argument("--process_existing", help="Wether to process already existing files or just new", default=True)
+    args = parser.parse_args()
 
-    output_file = '/media/gus/workspace/wml/vineyard-segmenter/results/unet_v5/polygons_v5.sqlite'
-    filtered_output_file = '/media/gus/workspace/wml/vineyard-segmenter/results/unet_v5/polygons_v5_filtered.sqlite'
-
-    simplify_features('/media/gus/workspace/wml/vineyard-segmenter/results/unet_v5/polygons_v5.sqlite',
-                      '/media/gus/workspace/wml/vineyard-segmenter/results/unet_v5/polygons_v5_filtered.sqlite')
-    exit(0)
+    version = args.version
+    interactive = args.interactive
+    # version = 5
+    # interactive = True
+    logging.info(f"Processing existing images:  {args.process_existing}")
 
     input_folder = cfg.results(f"processed/v{version}")
     output_file = cfg.results(f"processed/v{version}/polygons_v{version}.sqlite")
 
-    run_process(input_folder, output_file, interactive=interactive)
+    run_process(input_folder, output_file, interactive=interactive, process_existing=args.process_existing)
 
     logging.info("Vectorized geometries successfully written.")

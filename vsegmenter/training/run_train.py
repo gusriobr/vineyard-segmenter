@@ -37,7 +37,8 @@ if __name__ == '__main__':
 
     weights_file = None
     # weights_file = '/workspaces/wml/vineyard-segmenter/results/tmp/unet/2023-04-27T16-19_53'
-    weights_file = "/workspaces/wml/vineyard-segmenter/results/unet_v5/2023-04-29T23-00_32"
+    weights_file = cfg.results('tmp/unet_6/2023-05-01T08-55_44')
+
     logging.info(f"model_file = {model_file}")
     logging.info(f"history_file = {history_file}")
     logging.info(f"log_dir_path = {log_dir_path}")

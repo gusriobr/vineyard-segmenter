@@ -5,7 +5,7 @@ from geo.spatialite import create_connection, create_spatialite_table
 from image.raster import get_raster_bbox
 
 dataset_file = '/media/gus/workspace/wml/vineyard-segmenter/resources/dataset/samples.sqlite'
-raster_folder = '/media/gus/data/viticola/datasets/segmenter/v5/extractions'
+raster_folder = '/media/gus/data/viticola/datasets/segmenter/v5_ribera/extractions'
 
 EXTRACTIONS_SRID = 4258
 create_table_query = "CREATE TABLE extractions (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT)"
