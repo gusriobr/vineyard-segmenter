@@ -183,8 +183,8 @@ if __name__ == '__main__':
     # interactive = True
     logging.info(f"Processing existing images:  {args.process_existing}")
 
-    input_folder = cfg.results(f"processed/v{version}")
-    output_file = cfg.results(f"processed/v{version}/polygons_v{version}.sqlite")
+    input_folder = cfg.results(f"processed/v{version}_ribera")
+    output_file = cfg.results(f"processed/v{version}_ribera/polygons_v{version}.sqlite")
 
     run_process(input_folder, output_file, interactive=interactive, process_existing=args.process_existing)
 
