@@ -5,13 +5,16 @@ from keras_preprocessing.image import ImageDataGenerator
 def augment_image(image, mask):
     image = tf.cast(image, dtype=tf.float16)
     mask = tf.cast(mask, dtype=tf.uint8)
+    image = tf.image.random_brightness(image, 0.2)
+    image = tf.image.random_contrast(image, 0.8, 1.2)
+
     return image, mask
     # # Convertir la máscara a tf.float32
     # mask = tf.cast(mask, tf.float32)
     # # Aplicar aumentos aleatorios a la imagen y la máscara
-    # image = tf.image.random_brightness(image, 0.2)
-    # image = tf.image.random_contrast(image, 0.8, 1.2)
-    # mask = tf.image.random_flip_left_right(mask)
+    image = tf.image.random_brightness(image, 0.2)
+    image = tf.image.random_contrast(image, 0.8, 1.2)
+    mask = tf.image.random_flip_left_right(mask)
     # # Concatenar la imagen y la máscara a lo largo del último eje
     # augmented = tf.concat([image, mask], axis=-1)
     # # Devolver la imagen aumentada y la máscara original

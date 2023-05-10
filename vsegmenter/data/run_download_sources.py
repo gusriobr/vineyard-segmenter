@@ -16,7 +16,7 @@ sample_file = cfg.resources("dataset/samples.sqlite")
 pnoa_index = cfg.pnoa("pnoa_index.sqlite")
 pnoa_folder = cfg.PNOA_BASE_FOLDER
 
-logging.info(f"Intersecting extractions layer with PNOA index to find needed raster files")
+logging.info(f"Intersecting extraction layer with PNOA index to find needed raster files")
 pnoa_tiles = create_pnoa_list_by_layer(pnoa_index, sample_file, 'extractions', 'geometry')
 logging.info(f"Found {len(pnoa_tiles)} intersecting PNOA tiles {pnoa_tiles}")
 
