@@ -153,6 +153,7 @@ def create_pnoa_list_for_municipalities(index_file, muni_list):
         tile_list.extend([r[0] for r in cursor.fetchall()])
     return tile_list
 
+
 def create_pnoa_list_by_layer(index_file, db_file, layer_name, geometry_column):
     """
     Returns the list of pnoa tiles that intersect with the features of the given layer
@@ -162,8 +163,8 @@ def create_pnoa_list_by_layer(index_file, db_file, layer_name, geometry_column):
     :return:
     """
     pnoa_tiles = intersect_layers(index_file, 'pnoa_tiles', 'geom',
-                                      db_file, layer_name, geometry_column)
-    return  set([p[1] for p in pnoa_tiles])  # keep filename
+                                  db_file, layer_name, geometry_column)
+    return set([p[1] for p in pnoa_tiles])  # keep filename
 
 
 def get_WineDO_geomety_by_name(do_name, srid=None):
@@ -181,8 +182,6 @@ def get_WineDO_geomety_by_name(do_name, srid=None):
 
 
 ITACYL_PNOA_BASE = "http://ftp.itacyl.es/cartografia/01_Ortofotografia/{year}/RGB/H50_{tile_id}/{img_file}"
-
-
 
 
 def pnoa_storage_path(filename, dest_folder):
@@ -230,7 +229,12 @@ if __name__ == '__main__':
     raster_directory = "/media/cartografia/01_Ortofotografia/2020/RGB"
     # muni_file = '/media/gus/data/cartography/municipios/provmun_4258_2018.sqlite'
     muni_file = cfg.cartography("provmun_4258_2018.sqlite")
-    index_file = cfg.cartography("/workspaces/cartography/pnoa_index.sqlite")
+    index_file = cfg.cartography("pnoa_index.sqlite")
+    if not os.path.exists(index_file):
+        index_file = cfg.pnoa("pnoa_index.sqlite")
+    if not os.path.exists(index_file):
+        logging.error("No se ha podido encontrar el fichero pnoa: {index_file}")
+
 
     ########################
     ### creación indice de tiles pnoa
@@ -240,15 +244,16 @@ if __name__ == '__main__':
     ########################
     # creación de ficheros de índices pnoa a partir de geometrias/listado municipios de DO's
     ########################
-    for do_name in ["ribera", "arlanza", "toro"]:
+    for do_name in ["ribera", "arlanza", "toro", 'arribes', 'vino de zamora', 'rueda']:
         # utilizando geometría do
         do_geo = get_WineDO_geomety_by_name(do_name, srid="4258")
+        logging.info(f"Buscando tiles pnoa utilizando índice {index_file}")
         raster_files = create_pnoa_list_for_geo(index_file, do_geo)
         raster_files = [cfg.pnoa(filename) for filename in raster_files]
 
         # utilizando municipios
         # raster_files = create_pnoa_list_for_municipalities(index_file, ["05132","05014","05132"])
-        do_filename = cfg.resources(f"pnoa_{do_name}.txt")
+        do_filename = cfg.resources(f"pnoa_{do_name.replace(' ', '_')}.txt")
         with open(do_filename, 'w') as f:
             for filename in raster_files:
                 f.write(f"{filename}\n")
