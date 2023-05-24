@@ -6,7 +6,7 @@ import tensorflow as tf
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import unet
 from tensorflow import keras
-
+from itertools import product
 from data.dataset import Dataset, create_tf_datasets
 from data.image import augment_image
 from eval.evaluation import evaluate_on_dts
@@ -15,30 +15,33 @@ from training.trainer import Trainer
 from vsegmenter import cfg
 from tensorflow.python.keras import backend as K
 
-
 cfg.configLog()
 
 if __name__ == '__main__':
     dataset_version = 7
     version = 6
-    label = "unet"
     img_size = 128
-
-    dataset_file = cfg.dataset(f'v{dataset_version}/dataset_{img_size}.pickle')
-    logging.info(f"Using dataset file: {dataset_file}")
-    x_train, y_train, x_test, y_test = Dataset.load_from_file(dataset_file)
-
-    logging.info(f"Number of train samples: {len(x_train)}, test samples = {len(x_test)}")
-    logging.info(f"Sample dimensions: sample: {x_train[0].shape} label (mask): {y_train[0].shape}")
-    logging.info("Original image shape : {}".format(x_train.shape))
 
     do_evaluate = False
     weights_file = None
     # weights_file = cfg.results('tmp/unet_6/2023-05-01T08-55_44')
 
-    for apply_augmentation in [False, True]:
+    for apply_augmentation, dataset_version in product([False, True], [6, 7]):
+        label = f"unet_dts{dataset_version}{'' if not apply_augmentation else '_aug'}"
+
         K.clear_session()
         tf.keras.backend.clear_session()
+
+        dataset_file = cfg.dataset(f'v{dataset_version}/dataset_{img_size}.pickle')
+        logging.info(f"Using dataset file: {dataset_file}")
+        x_train, y_train, x_test, y_test = Dataset.load_from_file(dataset_file)
+
+        x_train = x_train[:1000]
+        y_train = y_train[:1000]
+
+        logging.info(f"Number of train samples: {len(x_train)}, test samples = {len(x_test)}")
+        logging.info(f"Sample dimensions: sample: {x_train[0].shape} label (mask): {y_train[0].shape}")
+        logging.info("Original image shape : {}".format(x_train.shape))
 
         logging.info("--------------------------------------------------------------------")
         logging.info(f"Starting training with imag augmentation = {apply_augmentation}")
@@ -79,7 +82,7 @@ if __name__ == '__main__':
         #                        callbacks=callbacks)
         trainer = Trainer(model, log_dir_path)
 
-        EPOCHS = 3
+        EPOCHS = 100
         LEARNING_RATE = 1e-3
         batch_size = 32
         # history = trainer.fit(model, train_dataset, validation_dataset, epochs=EPOCHS, batch_size=batch_size)
