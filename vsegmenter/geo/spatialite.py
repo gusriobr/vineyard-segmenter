@@ -1,7 +1,6 @@
 import sqlite3
 
 import shapely.wkb
-from shapely.wkb import dumps
 import logging
 
 
