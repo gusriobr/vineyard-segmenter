@@ -176,17 +176,13 @@ if __name__ == '__main__':
     parser.add_argument("--interactive", help="Run in interactive mode", default=False)
     parser.add_argument("--process_existing", help="Whether to process already existing files or just new",
                         default=True)
-    # args = parser.parse_args()
-    # input_folder = args.input_folder
-    # interactive = args.interactive
-    # process_existing = args.process_existing
 
-    input_folder = '/media/gus/workspace/wml/vineyard-segmenter/results/processed/v6'
-    interactive = True
-    process_existing = True
+    args = parser.parse_args()
+    input_folder = args.input_folder
+    interactive = args.interactive
+    process_existing = args.process_existing
 
     output_file = os.path.join(input_folder, "polygons.sqlite")
-
     logging.info(f"Processing raster images in folder:  {input_folder}")
     logging.info(f"Processing existing images:  {process_existing}")
     logging.info(f"Output polygons file:  {output_file}")
