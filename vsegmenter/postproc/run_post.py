@@ -176,7 +176,7 @@ def run_process(input_folder, output_file, interactive=False, wait_time=15, max_
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
-    parser.add_argument("input_folder", type=int, help="Folder that contains raster masks to process")
+    parser.add_argument("input_folder", type=str, help="Folder that contains raster masks to process")
     parser.add_argument("--interactive", help="Run in interactive mode", default=False)
     parser.add_argument("--process_existing", help="Whether to process already existing files or just new",
                         default=True)
