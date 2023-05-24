@@ -176,19 +176,19 @@ def run_process(input_folder, output_file, interactive=False, wait_time=15, max_
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
-    parser.add_argument("version", type=int, help="Model version")
+    parser.add_argument("input_folder", type=int, help="Folder that contains raster masks to process")
     parser.add_argument("--interactive", help="Run in interactive mode", default=False)
-    parser.add_argument("--process_existing", help="Wether to process already existing files or just new", default=True)
+    parser.add_argument("--process_existing", help="Whether to process already existing files or just new",
+                        default=True)
     args = parser.parse_args()
+    input_folder = args.input_folder
 
-    version = args.version
     interactive = args.interactive
-    # version = 5
-    # interactive = True
-    logging.info(f"Processing existing images:  {args.process_existing}")
+    output_file = os.path.join(input_folder, "polygons.sqlite")
 
-    input_folder = cfg.results(f"processed/v{version}_ribera")
-    output_file = cfg.results(f"processed/v{version}_ribera/polygons_v{version}.sqlite")
+    logging.info(f"Processing raster images in folder:  {input_folder}")
+    logging.info(f"Processing existing images:  {args.process_existing}")
+    logging.info(f"Output polygons file:  {output_file}")
 
     run_process(input_folder, output_file, interactive=interactive, process_existing=args.process_existing)
 
