@@ -219,14 +219,19 @@ if __name__ == '__main__':
     parser.add_argument("--run_on_dts", type=bool, help="Run model on extraction files", default=False, required=False)
     parser.add_argument("--pnoa_index_file", type=str, help="Fichero que contiene el listado de hojas pnoa a procesar",
                         default=None, required=False)
+    parser.add_argument("--model_file", type=str,
+                        help="Fichero del modelo a utilizar, ej: absolutepath/tmp/unet_v7/2023-05-24T04-24_52",
+                        default=None, required=False)
     args = parser.parse_args()
 
     version = args.version
     model_folder = cfg.results("")
+
+
     models = [
         # [os.path.join(model_folder, f"unet_v{version}.model"), f'unet_v{version}'],
         # [f'unet_v{version}', cfg.results('tmp/unet_6/2023-05-01T08-55_44')],
-        [f'unet_v{version}', cfg.results('tmp/unet_7/2023-05-01T08-55_44')],
+        [f'unet_v{version}', cfg.results('tmp/unet_v7/2023-05-24T04-24_52')],
     ]
     output_folder = cfg.results(f"processed/v{version}")
 
