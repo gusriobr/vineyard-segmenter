@@ -222,6 +222,9 @@ if __name__ == '__main__':
     parser.add_argument("--model_file", type=str,
                         help="Fichero del modelo a utilizar, ej: absolutepath/tmp/unet_v7/2023-05-24T04-24_52",
                         default=None, required=False)
+    parser.add_argument("--output_folder", type=str,
+                        help="Ruta destino de los archivos generados, por defecto results/processed/v{version}",
+                        default=None, required=False)
     args = parser.parse_args()
 
     version = args.version
@@ -234,6 +237,9 @@ if __name__ == '__main__':
         [f'unet_v{version}', cfg.results('unet_v7/2023-05-24T04-24_52')],
     ]
     output_folder = cfg.results(f"processed/v{version}")
+    if args.output_folder is not None:
+        output_folder = args.output_folder
+    logging.info(f"Output folder for processed raster masks {output_folder}")
 
     input_images = get_input_images(args)
     logging.info(f"Number of input images to process: {len(input_images)}")
