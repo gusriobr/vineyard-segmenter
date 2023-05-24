@@ -225,7 +225,8 @@ if __name__ == '__main__':
     model_folder = cfg.results("")
     models = [
         # [os.path.join(model_folder, f"unet_v{version}.model"), f'unet_v{version}'],
-        [f'unet_v{version}',cfg.results('tmp/unet_6/2023-05-01T08-55_44')],
+        # [f'unet_v{version}', cfg.results('tmp/unet_6/2023-05-01T08-55_44')],
+        [f'unet_v{version}', cfg.results('tmp/unet_7/2023-05-01T08-55_44')],
     ]
     output_folder = cfg.results(f"processed/v{version}")
 

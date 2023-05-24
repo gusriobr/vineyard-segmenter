@@ -132,6 +132,10 @@ def post_process_images(image_files, output_file):
         logging.info("Vectorizing image {} of {}".format(i + 1, total))
         vectorize_predictions(f_image, output_file, feature_filter=filter_by_area(min_area=300), db_file_srid=25830)
 
+    if not os.path.exists(output_file):
+        logging.info(f"NO SQLITE FILE FOUND, check image post_processing")
+        return
+
     filtered_output_file = output_file.replace(".sqlite", "_filtered.sqlite")
     logging.info(f"Simplifying polygons into {filtered_output_file}")
     simplify_features(output_file, filtered_output_file)
@@ -183,8 +187,8 @@ if __name__ == '__main__':
     # interactive = True
     logging.info(f"Processing existing images:  {args.process_existing}")
 
-    input_folder = cfg.results(f"processed/v{version}")
-    output_file = cfg.results(f"processed/v{version}/polygons_v{version}.sqlite")
+    input_folder = cfg.results(f"processed/v{version}_ribera")
+    output_file = cfg.results(f"processed/v{version}_ribera/polygons_v{version}.sqlite")
 
     run_process(input_folder, output_file, interactive=interactive, process_existing=args.process_existing)
 

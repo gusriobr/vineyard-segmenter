@@ -106,8 +106,8 @@ Dataset actual train = 1372 test = 343 con imágenes de 128x128
 
 Creamos co En este punto, para mejorar el modelo
 
-- Incrementar conjunto de entrenamiento
-- Añadir técnicas de augmención de dastos
+- Incrementar conjunto de entrenamiento, especialmente ejemplos negativos con tierras con poca vegetación.
+- Añadir técnicas de augmención de datos
 - Probar diferentes arquitecturas para el backbone
 - Añadir capas de regularización
 

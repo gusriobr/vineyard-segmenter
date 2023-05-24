@@ -17,7 +17,7 @@ def prepare_folders(dts_folder):
 
 if __name__ == '__main__':
 
-    version = "v6"
+    version = "v7"
     dts_folder = cfg.dataset(f'{version}')
 
     do_update_extr_info = True
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     sample_size = 256
     sample_file = cfg.resources('dataset/samples.sqlite')
 
-    pnoa_filter = None #'0345_5-3__95.tif'
+    pnoa_filter = None  #'0345_5-3__95.tif'
     if do_update_extr_info:
         dts.update_extraction_info(sample_file)
 
