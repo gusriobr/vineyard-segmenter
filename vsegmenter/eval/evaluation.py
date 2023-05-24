@@ -8,6 +8,9 @@ from postproc.run_post import post_process_images
 
 def evaluate_on_dts(model, tag, dts, version, output_folder):
     # runs model on dataset extractions to evaluation the modelo on dataset
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
     raster_files = dts.get_extration_files()
     total = len(raster_files)
     output_raster_list = []
@@ -23,6 +26,6 @@ def evaluate_on_dts(model, tag, dts, version, output_folder):
             logging.error(f"Error while predicting on raster {r_file}")
 
     logging.info(f"Prediction on dataset finished. Starting post-processing")
-    output_db_file = cfg.results(f"processed/v{version}/polygons_v{version}.sqlite")
+    output_db_file = os.path.join(output_folder, "polygons.sqlite")
     post_process_images(output_raster_list, output_db_file)
     logging.info(f"Evaluation finished output_folder: {output_folder}")

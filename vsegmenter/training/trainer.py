@@ -52,10 +52,9 @@ class Trainer:
             self.callbacks.append(tensorboard)
 
         if self.model_check_point:
-            model_checkpoint = tf.keras.callbacks.ModelCheckpoint(
-                filepath=os.path.join(self.log_dir, "checkpoint.h5"), save_weights_only=True, save_best_only=True)
+            model_checkpoint = tf.keras.callbacks.ModelCheckpoint(self.log_dir, save_weights_only=True,
+                                                                  save_best_only=True)
             self.callbacks.append(model_checkpoint)
-
         # Add the scheduler to callbacks if provided
         if self.scheduler is not None:
             self.callbacks.append(self.scheduler)
@@ -92,8 +91,6 @@ class Trainer:
                        ]
 
         self.model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=metrics)
-
-
 
 
 def mean_iou(y_true, y_pred):
