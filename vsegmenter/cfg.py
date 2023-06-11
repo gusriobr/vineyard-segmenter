@@ -35,7 +35,7 @@ def test_resource(filename):
 PROJECT_BASE = Path(os.path.dirname(os.path.abspath(__file__))).parent.absolute()
 # '/media/cartografia/01_Ortofotografia/2020/RGB'
 PNOA_BASE_FOLDER = os.environ.get('PNOA_BASE_FOLDER', default='/media/gus/data/rasters/aerial/pnoa/2020')
-CARTOGRAPHY_BASE_FOLDER = os.environ.get('CARTOGRAPHY_BASE_FOLDER', default="/workspaces/cartography/")
+CARTOGRAPHY_BASE_FOLDER = os.environ.get('CARTOGRAPHY_BASE_FOLDER', default="/media/gus/data/cartography")
 
 LOG_CONFIGURATION = True
 
