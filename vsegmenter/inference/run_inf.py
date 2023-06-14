@@ -214,6 +214,10 @@ def predict_on_raster(raster_file, model, output_file, scale_factor=0.5, patch_s
 if __name__ == '__main__':
     logging.info(f"IS_CUDA_DISABLED = : {is_cuda_disabled()}")
 
+    """
+    Ejemplo lanzamiento
+    nohup ./run_inference.sh 7 --pnoa_index_file /workspaces/wml/vineyard-segmenter/resources/pnoa_leon.txt --output_folder /workspaces/wml/vineyard-segmenter/results/processed/v7_leon &
+    """
     parser = argparse.ArgumentParser(description="Running inference con vsegmentation models")
     parser.add_argument("version", type=int, help="Model version")
     parser.add_argument("--run_on_dts", type=bool, help="Run model on extraction files", default=False, required=False)
@@ -229,7 +233,6 @@ if __name__ == '__main__':
 
     version = args.version
     model_folder = cfg.results("")
-
 
     models = [
         # [os.path.join(model_folder, f"unet_v{version}.model"), f'unet_v{version}'],
