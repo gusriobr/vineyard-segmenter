@@ -7,10 +7,8 @@ import os
 import time
 from pathlib import Path
 
-import fiona
 import rasterio
 from rasterio import features
-from shapely.geometry import mapping
 from shapely.geometry import shape
 from tqdm import tqdm
 
@@ -104,26 +102,24 @@ def filter_by_area(min_area):
     return area_filter
 
 
-def simplify_features(input_file, output_file):
-    with fiona.open(input_file) as source:
-        source_driver = source.driver
-        source_crs = source.crs
-        source_schema = source.schema
-        polys = [p for p in source]
+def simplify_features(input_file, output_file, db_file_srid):
+    polys = spt.list_features(input_file, VINEYARD_LAYER["name"], VINEYARD_LAYER["geometry_column"])
 
     # Simplificar los polígonos y almacenar en una lista
     with tqdm(total=len(polys), desc="Simplifying polygons") as pbar:
         polys_filtered = []
         for p in polys:
-            poly_filtered = simplify_polygon(shape(p["geometry"]))
+            poly_filtered = simplify_polygon(shape(p["geom"]))
             polys_filtered.append(poly_filtered)
             pbar.update(1)
 
     logging.info(f"Saving simplified features into {output_file}")
-
-    with fiona.open(output_file, "w", driver=source_driver, schema=source_schema, crs=source_crs) as dest:
-        records = [{'geometry': mapping(r), 'properties': {}} for r in polys_filtered]
-        dest.writerecords(records)
+    if not os.path.exists(output_file):
+        spt.create_spatialite_table(output_file, VINEYARD_LAYER["name"],
+                                    table_features_sql=VINEYARD_LAYER["sql"],
+                                    geometry_col=VINEYARD_LAYER["geometry_column"],
+                                    srid=db_file_srid)
+    spt.insert_polygons(output_file, "vineyard", "geom", polys_filtered, srid=db_file_srid)
 
 
 def post_process_images(image_files, output_file):
@@ -138,7 +134,7 @@ def post_process_images(image_files, output_file):
 
     filtered_output_file = output_file.replace(".sqlite", "_filtered.sqlite")
     logging.info(f"Simplifying polygons into {filtered_output_file}")
-    simplify_features(output_file, filtered_output_file)
+    simplify_features(output_file, filtered_output_file, db_file_srid=25830)
     logging.info("Vectorized geometries successfully written.")
 
 
@@ -180,16 +176,17 @@ if __name__ == '__main__':
     parser.add_argument("--interactive", help="Run in interactive mode", default=False)
     parser.add_argument("--process_existing", help="Whether to process already existing files or just new",
                         default=True)
+
     args = parser.parse_args()
     input_folder = args.input_folder
-
     interactive = args.interactive
-    output_file = os.path.join(input_folder, "polygons.sqlite")
+    process_existing = args.process_existing
 
+    output_file = os.path.join(input_folder, "polygons.sqlite")
     logging.info(f"Processing raster images in folder:  {input_folder}")
-    logging.info(f"Processing existing images:  {args.process_existing}")
+    logging.info(f"Processing existing images:  {process_existing}")
     logging.info(f"Output polygons file:  {output_file}")
 
-    run_process(input_folder, output_file, interactive=interactive, process_existing=args.process_existing)
+    run_process(input_folder, output_file, interactive=interactive, process_existing=process_existing)
 
-    logging.info("Vectorized geometries successfully written.")
+    logging.info("Finished. Vectorized geometries successfully written.")

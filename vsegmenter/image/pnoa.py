@@ -244,7 +244,7 @@ if __name__ == '__main__':
     ########################
     # creación de ficheros de índices pnoa a partir de geometrias/listado municipios de DO's
     ########################
-    for do_name in ["ribera", "arlanza", "toro", 'arribes', 'vino de zamora', 'rueda']:
+    for do_name in ["león", "benavente", "cigales", 'bierzo', "cebreros", "valtiendas"]:
         # utilizando geometría do
         do_geo = get_WineDO_geomety_by_name(do_name, srid="4258")
         logging.info(f"Buscando tiles pnoa utilizando índice {index_file}")
